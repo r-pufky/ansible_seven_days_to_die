@@ -1,30 +1,37 @@
-.. _service-steam:
+.. _service-steam-seven-days-to-die:
 
-Steam
-#####
-Steam dedicated servers with steamcmd and wine.
-
-.. toctree::
-  :hidden:
-  :maxdepth: -1
-
-  conan_exiles
-  left_4_dead
-  left_4_dead_2
-  satisfactory
-  seven_days_to_die
-  troubleshooting
+7 Days to Die
+#############
+`7 Days to Die <https://7daystodie.com/>`_ dedicated server on steam.
 
 .. role:: steam
-  :service_doc: https://developer.valvesoftware.com/wiki/SteamCMD
-  :blocking:    Require upstream repo update, wine dependency updates.
+  :service_doc: https://7daystodie.gamepedia.com/System_Requirements
+  :ref:         https://developer.valvesoftware.com/wiki/7_Days_to_Die_Dedicated_Server#Installation,
+                https://www.gameserverkings.com/knowledge-base/7-days-to-die/7d2d-new-user-guide/
   :private:
   :update:      2022-10-10
   :open:
 
-  Role handles configuration of all provided games servers. See each game for
-  game-specific documentation.
+  7 Days to Die dedicated server.
+
+  * Role handles all steps that are provided in this documentation.
+  * If connecting on local network, use the private IP of the server, not the
+    public IP address.
+  * Control Panel and Telnet are insecure. **Disable** and **block** ports.
+  * ``steam_7days_dir/saves`` contains server state information.
+
+Ports
+*****
+.. literalinclude:: ../defaults/main/seven_days_to_die/ports.yml
 
 Defaults
 ********
-.. literalinclude:: ../defaults/main/main.yml
+.. literalinclude:: ../defaults/main/seven_days_to_die/main.yml
+
+Server Admin
+************
+.. literalinclude:: ../defaults/main/seven_days_to_die/serveradmin.xml.yml
+
+Server Config
+*************
+.. literalinclude:: ../defaults/main/seven_days_to_die/serverconfig.xml.yml
