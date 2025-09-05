@@ -1,6 +1,6 @@
 ---
 ###############################################################################
-# 7 Days to Die (+10GB)
+# 7 Days to Die
 ###############################################################################
 #       Minimum   Recommended
 # CPU:  2c/4t     4c/8t@3.0Ghz
@@ -20,7 +20,7 @@ seven_days_to_die_srv_root: '/home/steam/seven_days_to_die'
 # * https://developer.valvesoftware.com/wiki/SteamCMD
 seven_days_to_die_srv_extra_opts: ''
 
-# Update 7 Days to Die server. Default: True.
+# Update 7 Days to Die server? Default: True.
 seven_days_to_die_srv_update_server: true
 
 # Validation delay (seconds).

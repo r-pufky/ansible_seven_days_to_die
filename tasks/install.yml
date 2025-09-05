@@ -45,7 +45,7 @@
     state: 'directory'
   become: true
   become_user: '{{
-      _steam_srv_user.raw
+      _seven_days_to_die.user
       if seven_days_to_die_srv_user_data_manage_enable else
       "root"
     }}'

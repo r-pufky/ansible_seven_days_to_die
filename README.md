@@ -1,5 +1,5 @@
 # 7 Days to Die
-7 Days to Die installation from steamcmd.
+7 Days to Die dedicated server.
 
 ## Requirements
 [supported platforms](https://github.com/r-pufky/ansible_seven_days_to_die/blob/main/meta/main.yml)
@@ -19,8 +19,8 @@ All ports and protocols have been defined for the role.
 ## Example Playbook
 Read defaults documentation.
 
-The following example will get an instance quickly up and running. Server will be created using the
-steamcmd user from `r_pufky.game.steam`.
+The following example will get an instance quickly up and running. Server will
+be created using the steamcmd user from `r_pufky.game.steam`.
 ``` yaml
 - name: '7 Days to Die server'
   hosts: '7days.example.com'
@@ -47,7 +47,7 @@ steamcmd user from `r_pufky.game.steam`.
 
 Changes updating the configuration only can be done to speed role application:
 ``` bash
-ansible-playbook site.yml --tags 7days -e 'conan_exiles_srv_update_server=false'
+ansible-playbook site.yml --tags 7days -e 'satisfactory_srv_update_server=false'
 ```
 
 ## Development

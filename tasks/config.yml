@@ -12,7 +12,7 @@
 # Reference:
 # * https://developer.valvesoftware.com/wiki/7_Days_to_Die_Dedicated_Server
 
-- name: 'Config | set server config'
+- name: 'Config | set serverconfig.xml'
   ansible.builtin.template:
     src: 'serverconfig.xml.j2'
     dest: '{{ seven_days_to_die_srv_root ~ "/serverconfig.xml" }}'
@@ -20,7 +20,7 @@
     group: '{{ _seven_days_to_die.gid }}'
     mode: '0600'
 
-- name: 'Config | set server admin config'
+- name: 'Config | set serveradmin.xml'
   when: seven_days_to_die_cfg_server_admin_enable
   ansible.builtin.template:
     src: 'serveradmin.xml.j2'
@@ -29,7 +29,7 @@
     group: '{{ _seven_days_to_die.gid }}'
     mode: '0600'
 
-- name: 'Config | reset server admin config'
+- name: 'Config | reset serveradmin.xml'
   when: not seven_days_to_die_cfg_server_admin_enable
   ansible.builtin.file:
     path: '{{ _seven_days_to_die.saves ~ "/serveradmin.xml" }}'
@@ -80,9 +80,6 @@
           environment:
             - var: 'LD_LIBRARY_PATH'
               value: '{{ seven_days_to_die_srv_root }}:{{ seven_days_to_die_srv_root }}/bin'
-          limit_nofile:
-            soft: 4096
-            hard: 4096
         install:
           wanted_by:
             - 'multi-user.target'
