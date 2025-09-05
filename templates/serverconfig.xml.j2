@@ -1,0 +1,110 @@
+<?xml version="1.0"?>
+<ServerSettings>
+  <property name="ServerName" value="{{ seven_days_to_die_cfg_server_name }}"/>
+  <property name="ServerDescription" value="{{ seven_days_to_die_cfg_server_description }}"/>
+  <property name="ServerWebsiteURL" value="{{ seven_days_to_die_cfg_server_website_url }}"/>
+  <property name="ServerPassword" value="{{ seven_days_to_die_cfg_server_password }}"/>
+  <property name="ServerLoginConfirmationText" value="{{ seven_days_to_die_cfg_server_login_confirmation_text }}"/>
+  <property name="Region" value="{{ seven_days_to_die_cfg_region }}"/>
+  <property name="Language" value="{{ seven_days_to_die_cfg_language }}"/>
+
+  <property name="ServerPort" value="{{ seven_days_to_die_cfg_server_port }}"/>
+  <property name="ServerVisibility" value="{{ seven_days_to_die_cfg_server_visibility }}"/>
+  <property name="ServerDisabledNetworkProtocols" value="{{ seven_days_to_die_cfg_server_disabled_network_protocols | join(",") }}"/>
+  <property name="ServerMaxWorldTransferSpeedKiBs" value="{{ seven_days_to_die_cfg_server_max_world_transfer_speed_kibs }}"/>
+
+  <property name="ServerMaxPlayerCount" value="{{ seven_days_to_die_cfg_server_max_player_count }}"/>
+  <property name="ServerReservedSlots" value="{{ seven_days_to_die_cfg_server_reserved_slots }}"/>
+  <property name="ServerReservedSlotsPermission" value="{{ seven_days_to_die_cfg_server_reserved_slots_permission }}"/>
+  <property name="ServerAdminSlots" value="{{ seven_days_to_die_cfg_server_admin_slots }}"/>
+  <property name="ServerAdminSlotsPermission" value="{{ seven_days_to_die_cfg_server_admin_slots_permission }}"/>
+
+  <property name="WebDashboardEnabled" value="{{ seven_days_to_die_cfg_web_dashboard_enabled | lower }}"/>
+  <property name="WebDashboardPort" value="{{ seven_days_to_die_cfg_web_dashboard_port }}"/>
+  <property name="WebDashboardUrl" value="{{ seven_days_to_die_cfg_web_dashboard_url }}"/>
+  <property name="EnableMapRendering" value="{{ seven_days_to_die_cfg_enable_map_rendering | lower }}"/>
+  <property name="TelnetEnabled" value="{{ seven_days_to_die_cfg_telnet_enabled | lower }}"/>
+  <property name="TelnetPort" value="{{ seven_days_to_die_cfg_telnet_port }}"/>
+  <property name="TelnetPassword" value="{{ seven_days_to_die_cfg_telnet_password }}"/>
+  <property name="TelnetFailedLoginLimit" value="{{ seven_days_to_die_cfg_telnet_failed_login_limit }}"/>
+  <property name="TelnetFailedLoginsBlocktime" value="{{ seven_days_to_die_cfg_telnet_failed_logins_blocktime }}"/>
+  <property name="TerminalWindowEnabled" value="{{ seven_days_to_die_cfg_terminal_window_enabled | lower }}"/>
+
+  <property name="AdminFileName" value="{{ seven_days_to_die_cfg_role_admin_file }}"/>
+
+  <property name="ServerAllowCrossplay" value="{{ seven_days_to_die_cfg_server_allow_crossplay | lower }}"/>
+  <property name="EACEnabled" value="{{ seven_days_to_die_cfg_eac_enabled | lower }}"/>
+  <property name="IgnoreEOSSanctions" value="{{ seven_days_to_die_cfg_ignore_eos_sanctions | lower }}"/>
+  <property name="HideCommandExecutionLog" value="{{ seven_days_to_die_cfg_hide_command_execution_log }}"/>
+  <property name="MaxUncoveredMapChunksPerPlayer" value="{{ seven_days_to_die_cfg_max_uncovered_map_chunks_per_player }}"/>
+  <property name="PersistentPlayerProfiles" value="{{ seven_days_to_die_cfg_persistent_player_profiles | lower }}"/>
+  <property name="MaxChunkAge" value="{{ seven_days_to_die_cfg_max_chunk_age }}"/>
+  <property name="SaveDataLimit" value="{{ seven_days_to_die_cfg_save_data_limit }}"/>
+
+  <property name="GameWorld" value="{{ seven_days_to_die_cfg_game_world }}"/>
+  <property name="WorldGenSeed" value="{{ seven_days_to_die_cfg_world_gen_seed }}"/>
+  <property name="WorldGenSize" value="{{ seven_days_to_die_cfg_world_gen_size }}"/>
+  <property name="GameName" value="{{ seven_days_to_die_cfg_game_name }}"/>
+  <property name="GameMode" value="{{ seven_days_to_die_cfg_game_mode }}"/>
+
+  <property name="GameDifficulty" value="{{ seven_days_to_die_cfg_game_difficulty }}"/>
+  <property name="BlockDamagePlayer" value="{{ seven_days_to_die_cfg_block_damage_player }}"/>
+  <property name="BlockDamageAI" value="{{ seven_days_to_die_cfg_block_damage_ai }}"/>
+  <property name="BlockDamageAIBM" value="{{ seven_days_to_die_cfg_block_damage_aibm }}"/>
+  <property name="XPMultiplier" value="{{ seven_days_to_die_cfg_xp_multiplier }}"/>
+  <property name="PlayerSafeZoneLevel" value="{{ seven_days_to_die_cfg_player_safe_zone_level }}"/>
+  <property name="PlayerSafeZoneHours" value="{{ seven_days_to_die_cfg_player_safe_zone_hours }}"/>
+
+  <property name="BuildCreate" value="{{ seven_days_to_die_cfg_build_create | lower }}"/>
+  <property name="DayNightLength" value="{{ seven_days_to_die_cfg_day_night_length }}"/>
+  <property name="DayLightLength" value="{{ seven_days_to_die_cfg_day_light_length }}"/>
+  <property name="BiomeProgression" value="{{ seven_days_to_die_cfg_biome_progression | lower }}"/>
+  <property name="StormFreq" value="{{ seven_days_to_die_cfg_storm_freq }}"/>
+  <property name="DeathPenalty" value="{{ seven_days_to_die_cfg_death_penalty }}"/>
+  <property name="DropOnDeath" value="{{ seven_days_to_die_cfg_drop_on_death }}"/>
+  <property name="DropOnQuit" value="{{ seven_days_to_die_cfg_drop_on_quit }}"/>
+  <property name="BedrollDeadZoneSize" value="{{ seven_days_to_die_cfg_bedroll_deadzone_size }}"/>
+  <property name="BedrollExpiryTime" value="{{ seven_days_to_die_cfg_bedroll_expiry_time }}"/>
+  <property name="AllowSpawnNearFriend" value="{{ seven_days_to_die_cfg_allow_spawn_near_friend }}"/>
+
+  <property name="MaxSpawnedZombies" value="{{ seven_days_to_die_cfg_max_spawned_zombies }}"/>
+  <property name="MaxSpawnedAnimals" value="{{ seven_days_to_die_cfg_max_spawned_animals }}"/>
+  <property name="ServerMaxAllowedViewDistance" value="{{ seven_days_to_die_cfg_server_max_allowed_view_distance }}"/>
+  <property name="MaxQueuedMeshLayers" value="{{ seven_days_to_die_cfg_max_queued_mesh_layers }}"/>
+
+  <property name="EnemySpawnMode" value="{{ seven_days_to_die_cfg_enemy_spawn_mode | lower }}"/>
+  <property name="EnemyDifficulty" value="{{ seven_days_to_die_cfg_enemy_difficulty }}"/>
+  <property name="ZombieFeralSense" value="{{ seven_days_to_die_cfg_zombie_feral_sense }}"/>
+  <property name="ZombieMove" value="{{ seven_days_to_die_cfg_zombie_move }}"/>
+  <property name="ZombieMoveNight" value="{{ seven_days_to_die_cfg_zombie_move_night }}"/>
+  <property name="ZombieFeralMove" value="{{ seven_days_to_die_cfg_zombie_feral_move }}"/>
+  <property name="ZombieBMMove" value="{{ seven_days_to_die_cfg_zombie_bm_move }}"/>
+  <property name="BloodMoonFrequency" value="{{ seven_days_to_die_cfg_blood_moon_frequency }}"/>
+  <property name="BloodMoonRange" value="{{ seven_days_to_die_cfg_blood_moon_range }}"/>
+  <property name="BloodMoonWarning" value="{{ seven_days_to_die_cfg_blood_moon_warning }}"/>
+  <property name="BloodMoonEnemyCount" value="{{ seven_days_to_die_cfg_blood_moon_enemy_count }}"/>
+
+  <property name="LootAbundance" value="{{ seven_days_to_die_cfg_loot_abundance }}"/>
+  <property name="LootRespawnDays" value="{{ seven_days_to_die_cfg_loot_respawn_days }}"/>
+  <property name="AirDropFrequency" value="{{ seven_days_to_die_cfg_air_drop_frequency }}"/>
+  <property name="AirDropMarker" value="{{ seven_days_to_die_cfg_air_drop_marker | lower }}"/>
+
+  <property name="PartySharedKillRange" value="{{ seven_days_to_die_cfg_party_shared_kill_range }}"/>
+  <property name="PlayerKillingMode" value="{{ seven_days_to_die_cfg_player_killing_mode }}"/>
+
+  <property name="LandClaimCount" value="{{ seven_days_to_die_cfg_land_claim_count }}"/>
+  <property name="LandClaimSize" value="{{ seven_days_to_die_cfg_land_claim_size }}"/>
+  <property name="LandClaimDeadZone" value="{{ seven_days_to_die_cfg_land_claim_deadzone }}"/>
+  <property name="LandClaimExpiryTime" value="{{ seven_days_to_die_cfg_land_claim_expiry_time }}"/>
+  <property name="LandClaimDecayMode" value="{{ seven_days_to_die_cfg_land_claim_decay_mode }}"/>
+  <property name="LandClaimOnlineDurabilityModifier" value="{{ seven_days_to_die_cfg_land_claim_online_durability_modifier }}"/>
+  <property name="LandClaimOfflineDurabilityModifier" value="{{ seven_days_to_die_cfg_land_claim_offline_durability_modifier }}"/>
+  <property name="LandClaimOfflineDelay" value="{{ seven_days_to_die_cfg_land_claim_offline_delay }}"/>
+  <property name="DynamicMeshEnabled" value="{{ seven_days_to_die_cfg_dynamic_mesh_enabled | lower }}"/>
+  <property name="DynamicMeshLandClaimOnly" value="{{ seven_days_to_die_cfg_dynamic_mesh_land_claim_only | lower }}"/>
+  <property name="DynamicMeshLandClaimBuffer" value="{{ seven_days_to_die_cfg_dynamic_mesh_land_claim_buffer }}"/>
+  <property name="DynamicMeshMaxItemCache" value="{{ seven_days_to_die_cfg_dynamic_mesh_max_item_cache }}"/>
+  <property name="TwitchServerPermission" value="{{ seven_days_to_die_cfg_twitch_server_permission }}"/>
+  <property name="TwitchBloodMoonAllowed" value="{{ seven_days_to_die_cfg_blood_moon_allowed | lower }}"/>
+  <property name="QuestProgressionDailyLimit" value="{{ seven_days_to_die_cfg_quest_progression_daily_limit }}"/>
+</ServerSettings>

@@ -1,0 +1,180 @@
+---
+# yamllint disable rule:line-length
+###############################################################################
+# Server Admins (serveradmin.xml) Options.
+###############################################################################
+# Specifying admins and restrictions requires user ID lookups on platforms that
+# users are on.
+#
+# Web console users ('console → createwebuser' while playing) are reset each
+# time role is applied.
+#
+# Steam ID may be retrieved from any of the following:
+# * https://steamdb.info/calculator/
+# * https://steamid.io/lookup
+# * http://steamid.co/
+#
+# Input the player's name in the search field (Kinyajuu) or steam page URL.
+# SteamID64 is required (76561198021925107).
+#
+# In almost **ALL** cases outside of Steam; it is just easier to look in server
+# logs to obtain user ID's:
+#
+#   tail -F /home/steam/seven_days_to_die/output_log__*.txt
+#
+#   grep -i {PLAYER NAME} ~/.local/share/7DaysToDie/Saves/.../players.xml
+#
+# Or via the built-in web console:
+#
+#   http://{server}:8080
+#
+#   Login → console
+#
+# Reference:
+# * https://shockbyte.com/help/knowledgebase/articles/how-to-find-a-player-s-eos-id-in-7-days-to-die
+#
+# Permission levels:
+#   0-1000: A user may run any command equal to or above their permission
+#           level. Users not given a permission level in this file will have a
+#           default permission level of 1000 (no privileges).
+#        0: 'root' permissions (all commands).
+#
+# Reference:
+# * https://www.gameserverkings.com/knowledge-base/7-days-to-die/7d2d-new-user-guide/
+# yamllint enable rule:line-length
+
+# Enable server admin management (serveradmin.xml)? Default: False.
+seven_days_to_die_cfg_server_admin_enable: false
+
+# List of server admins.
+#
+# seven_days_to_die_cfg_server_admins:
+#     list of dict - server admin definitions.
+#   - platform: str - Platform name.
+#         Values:
+#           EOS: Epic Online Services.
+#           Steam: Steam (SteamID64).
+#           XBL: Xbox Live.
+#           PSN: Playstation Network.
+#     comment: str - Admin comment. Optional.
+#     id: int - Platform user ID.
+#     level: int - Permissions level.
+#
+# seven_days_to_die_server_admin:
+#   - platform: 'Steam'
+#     comment: 'Kinyajuu'
+#     id: 76561198021925107
+#     level: 0
+#
+# Default: [] (no admins).
+seven_days_to_die_cfg_server_admins: []
+
+# Whitelisted users.
+#
+# Mutually exclusive with seven_days_to_die_cfg_blacklist (disables blacklist).
+#
+# seven_days_to_die_cfg_whitelist:
+#     list of dict - whitelisted user definitions.
+#   - platform: str - Platform name.
+#         Values:
+#           EOS: Epic Online Services.
+#           Steam: Steam (SteamID64).
+#           XBL: Xbox Live.
+#           PSN: Playstation Network.
+#     id: int - Platform user ID.
+#     comment: str - Admin comment. Optional.
+#
+# seven_days_to_die_cfg_whitelist:
+#   - platform: 'Steam'
+#     id: 76561198021925107
+#     comment: 'Kinyajuu'
+#
+# Default: [] (disabled).
+seven_days_to_die_cfg_whitelist: []
+
+# Blacklisted users.
+#
+# Mutually exclusive with seven_days_to_die_cfg_whitelist (disables whitelist).
+#
+# seven_days_to_die_cfg_blacklist:
+#     list of dict - Blacklisted user definitions.
+#   - platform: str - Platform name.
+#         Values:
+#           EOS: Epic Online Services.
+#           Steam: Steam (SteamID64).
+#           XBL: Xbox Live.
+#           PSN: Playstation Network.
+#     id: int - Platform user ID.
+#     unbandate: str - 'YYYY-MM-DD HH:MM:SS' unban date specifier.
+#         Special Case:
+#           '': Permanent ban.
+#     reason: str - Ban reason displayed to user.
+#     comment: str - Admin comment. Optional.
+#
+# seven_days_to_die_cfg_whitelist:
+#   - platform: 'Steam'
+#     id: 76561198021925108
+#     unbandate: '2022-01-01 12:00:00'
+#     reason: 'Griefing temp ban.'
+#   - platform: 'Steam'
+#     id: 76561198021925109
+#     unbandate: ''
+#     reason: 'hacking'
+#     comment: 'caught exploiting map.'
+#
+# Default: [] (disabled).
+seven_days_to_die_cfg_blacklist: []
+
+# Command Permissions.
+#
+# Special Case:
+# * Commands are granted access by all levels *above* the assigned permission.
+# * Commands not specified have default permission level=0.
+#
+# seven_days_to_die_cfg_permissions:
+#     list of dict - Command permission definitions.
+#   - command: str - server command.
+#     level: int - Permissions level.
+#
+# Default:
+#   - {command: 'chunkcache', level: 1000}
+#   - {command: 'debugweather', level: 1000}
+#   - {command: 'getgamepref', level: 1000}
+#   - {command: 'getgamestat', level: 1000}
+#   - {command: 'gettime', level: 1000}
+#   - {command: 'help', level: 1000}
+#   - {command: 'listplayerids', level: 1000}
+#   - {command: 'listthreads', level: 1000}
+#   - {command: 'memcl', level: 1000}
+#   - {command: 'settempunit', level: 1000}
+#
+# Reference:
+# * https://7daystodie.fandom.com/wiki/Command_Console
+# * https://7daystodie.fandom.com/wiki/Server:_serveradmin.xml
+seven_days_to_die_cfg_permissions:
+  - {command: 'chunkcache', level: 1000}
+  - {command: 'debugweather', level: 1000}
+  - {command: 'getgamepref', level: 1000}
+  - {command: 'getgamestat', level: 1000}
+  - {command: 'gettime', level: 1000}
+  - {command: 'help', level: 1000}
+  - {command: 'listplayerids', level: 1000}
+  - {command: 'listthreads', level: 1000}
+  - {command: 'memcl', level: 1000}
+  - {command: 'settempunit', level: 1000}
+
+# API access tokens.
+#
+# seven_days_to_die_cfg_api_tokens:
+#     list of dict - API access token definitions.
+#   - name: str - API username.
+#     secret: str - API token (alphanumeric).
+#     level: int - Permissions level.
+#
+# seven_days_to_die_cfg_api_tokens:
+#   - name: 'adminuser1'
+#     secret: 'supersecrettoken'
+#     level: 0
+#
+# Default: [] (disabled).
+seven_days_to_die_cfg_api_tokens: []

@@ -1,0 +1,684 @@
+---
+###############################################################################
+# Server Config (serverconfig.xml) Options
+###############################################################################
+# Server instance configuration.
+#
+# Reference:
+# * https://developer.valvesoftware.com/wiki/7_Days_to_Die_Dedicated_Server
+
+# Server name. Default: 'My Game Host'.
+seven_days_to_die_cfg_server_name: 'My Game Host'
+
+# Server description. Default: 'A 7 Days to Die server'.
+seven_days_to_die_cfg_server_description: 'A 7 Days to Die server'
+
+# Server URL link. Default: ''.
+seven_days_to_die_cfg_server_website_url: ''
+
+# Server password. Default: ''.
+seven_days_to_die_cfg_server_password: ''
+
+# Login confirmation text.
+#
+# If set the user will see the message during joining the server and has to
+# confirm it before continuing. For more complex changes to this window you can
+# change the 'serverjoinrulesdialog' window in UI.
+#
+# Default: ''.
+seven_days_to_die_cfg_server_login_confirmation_text: ''
+
+# Server region.
+#
+# Values:
+#   NorthAmericaEast: North america east (default).
+#   NorthAmericaWest: North america west.
+#     CentralAmerica: Central america.
+#       SouthAmerica: South america.
+#             Europe: Europe.
+#             Russia: Russia.
+#               Asia: Asia.
+#         MiddleEast: Middle East.
+#             Africa: Africa.
+#            Oceania: Oceania.
+#
+# Default: 'NorthAmericaEast'.
+seven_days_to_die_cfg_region: 'NorthAmericaEast'
+
+# Server player base primary language (in english). Default: 'English'.
+seven_days_to_die_cfg_language: 'English'
+
+###############################################################################
+# Networking
+###############################################################################
+
+# Server port. Default: 26900.
+seven_days_to_die_cfg_server_port: 26900
+
+# Server visibility.
+#
+# Values:
+#   2: Public (default).
+#   1: Friends only - as you are never friend of a dedicated server setting
+#      this will only work when the first player connects manually by IP.
+#   0: Not listed.
+#
+# Default: 2 (public).
+seven_days_to_die_cfg_server_visibility: 2
+
+# Disabled networking protocols.
+#
+# Values:
+#        LiteNetLib: Built-in UDP Networking. Only disable for temporary
+#                    troubleshooting as it will greatly degrade server
+#                    optimization.
+#   SteamNetworking: Steam library indirect service connections. Disable when
+#                    no NAT router between your users and server or when
+#                    port-forwarding is set up correctly.
+#
+# Default: ['SteamNetworking'].
+seven_days_to_die_cfg_server_disabled_network_protocols:
+  - 'SteamNetworking'
+
+# Maximum speed world is transferred on first connect (KiB/s).
+#
+# Only when the client does not have the world yet.
+#
+# values:
+#   0-1300: Limit is about 1300 KiB/s (10Mbps), even if higher value.
+#
+# Default: 512.
+seven_days_to_die_cfg_server_max_world_transfer_speed_kibs: 512
+
+###############################################################################
+# Slots
+###############################################################################
+
+# Max player count.
+#
+# Greater than 20 players may cause data save issues.
+#
+# Default: 8.
+seven_days_to_die_cfg_server_max_player_count: 8
+
+# Player count reserved slots.
+#
+# Applies to players with permissions >
+# seven_days_to_die_cfg_server_reserved_slots_permission.
+#
+# Default: 0.
+seven_days_to_die_cfg_server_reserved_slots: 0
+
+# Required permission level to use reserved slots. Default: 100.
+seven_days_to_die_cfg_server_reserved_slots_permission: 100
+
+# Admin player slots.
+#
+# Does not apply to seven_days_to_die_cfg_server_max_player_count.
+#
+# Default: 0.
+seven_days_to_die_cfg_server_admin_slots: 0
+
+# Required permission level to use admin slot permissions. Default: 0.
+seven_days_to_die_cfg_server_admin_slots_permission: 0
+
+###############################################################################
+# Admin Interfaces
+###############################################################################
+
+# Enable web dashboard? Default: False.
+seven_days_to_die_cfg_web_dashboard_enabled: false
+
+# Web dashboard port. Default: 8080.
+seven_days_to_die_cfg_web_dashboard_port: 8080
+
+# Web dashboard URL.
+#
+# External URL to web dashboard if not the public IP of the server (e.g. behind
+# a reverse proxy). Full URL required 'https://domainOfReverseProxy.tld:1234/'.
+#
+# Default: '' (Use public IP).
+seven_days_to_die_cfg_web_dashboard_url: ''
+
+# Enable map rendering? Default: False.
+#
+# Render map to tile images while exploring it. Used by web dashboard to
+# display a view of the map.
+#
+# Default: False.
+seven_days_to_die_cfg_enable_map_rendering: false
+
+# Enable telnet server? Default: False.
+seven_days_to_die_cfg_telnet_enabled: false
+
+# Telnet server port. Default: 8081.
+seven_days_to_die_cfg_telnet_port: 8081
+
+# Telnet server password.
+#
+# Special Case:
+# * If no password is set the server will only listen on the local loopback
+#   interface.
+#
+# Default: '' (local loopback only).
+seven_days_to_die_cfg_telnet_password: ''
+
+# Failed telnet login attempts before blocking client. Default: 10.
+seven_days_to_die_cfg_telnet_failed_login_limit: 10
+
+# Failed telnet login block time (seconds). Default: 10.
+seven_days_to_die_cfg_telnet_failed_logins_blocktime: 10
+
+# Show terminal window for log output/command input (windows only)?
+#
+# Default: True.
+seven_days_to_die_cfg_terminal_window_enabled: true
+
+###############################################################################
+# Other Technical Settings
+###############################################################################
+
+# Enable crossplay.
+#
+# Crossplay servers will only be found in searches and joinable if sanctions
+# are not ignored, and have a default or lower player slot count.
+#
+# Default: False.
+seven_days_to_die_cfg_server_allow_crossplay: false
+
+# Enable Easy Anti-cheat? Default: True.
+seven_days_to_die_cfg_eac_enabled: true
+
+# Ignore EOS (Epic Online Services) sanctions when allowing players to join?
+#
+# Default: False.
+seven_days_to_die_cfg_ignore_eos_sanctions: false
+
+# Hide command execution logging.
+#
+# Values:
+#   0: Show everything (default).
+#   1: Hide from Telnet/control_panel.
+#   2: 1 + hide from remote game clients.
+#   3: Hide everything.
+#
+# Default: 0 (show all).
+seven_days_to_die_cfg_hide_command_execution_log: 0
+
+# Number of chunks that can be uncovered on in game map by each player.
+#
+# Resulting max map file size limit per player is (x * 512 Bytes), uncovered
+# area is (x * 256 m²). Default 131072 means max 32 km² can be uncovered at
+# any time.
+#
+# Default: 131072 (32 km²).
+seven_days_to_die_cfg_max_uncovered_map_chunks_per_player: 131072
+
+# Enable persistent player profiles?
+#
+# Values:
+#   False: Disabled - player can join with any selected profile.
+#    True: Enabled - player joins with last profile they joined with.
+#
+# Default: False.
+seven_days_to_die_cfg_persistent_player_profiles: false
+
+# Number of in-game days which must pass since visiting a chunk before it will
+# reset to its original state if not revisited or protected (e.g. by a land
+# claim or bedroll being in close proximity).
+#
+# Values:
+#   -1: Disable (default).
+#   #: Number of in-game days.
+#
+# Default: -1 (disabled).
+seven_days_to_die_cfg_max_chunk_age: -1
+
+# Max disk space allowed for each save game (MB).
+#
+# Saved chunks may be forcibly reset to their original states to free up space
+# when this limit is reached.
+#
+# Values:
+#   -1: Disable limit (default).
+#
+# Default: -1.
+seven_days_to_die_cfg_save_data_limit: -1
+
+###############################################################################
+# Gameplay
+###############################################################################
+
+# World map.
+#
+# Values:
+#   RWG: Random World Generation using seven_days_to_die_cfg_world_gen_seed and
+#        seven_days_to_die_cfg_world_gen_size.
+#   Navezgane: Main world (default).
+#   Pregen04k1: Pregenerated random map 1.
+#   Pregen08k1: Pregenerated random map 2.
+#   Pregen10k1: Pregenerated random map 3.
+#
+# Default: 'Navezgane'.
+seven_days_to_die_cfg_game_world: 'Navezgane'
+
+# Seed for random world map generation.
+#
+# Requires:
+# * seven_days_to_die_cfg_game_world=RWG.
+# * seven_days_to_die_cfg_world_gen_size set.
+#
+# Existing RWG maps with same seed/size will be loaded.
+#
+# Default: 'MyGame'
+seven_days_to_die_cfg_world_gen_seed: 'MyGame'
+
+# Size for random world map generation.
+#
+# Requires
+# * seven_days_to_die_cfg_game_world=RWG.
+# * seven_days_to_die_cfg_world_gen_seed set.
+#
+# Existing RWG maps with same seed/size will be loaded.
+#
+# Values:
+#   2048-16384: Map size range. Large maps take a long time to generate.
+#
+# Default: 4096.
+seven_days_to_die_cfg_world_gen_size: 6144
+
+# Game name. Default: 'My Game'.
+seven_days_to_die_cfg_game_name: 'MyGame'
+
+# Game mode. Default: 'GameModeSurvival'.
+seven_days_to_die_cfg_game_mode: 'GameModeSurvival'
+
+###############################################################################
+# Difficulty
+###############################################################################
+
+# Game difficulty.
+#
+# Values:
+#   0: Scavenger.
+#   1: Adventurer (default).
+#   2: Nomad.
+#   3: Warrior.
+#   4: Survivalist.
+#   5: Insane.
+#
+# Default: 1.
+seven_days_to_die_cfg_game_difficulty: 1
+
+# Player damage to blocks (percentage). Default: 100.
+seven_days_to_die_cfg_block_damage_player: 100
+
+# AI damage to blocks (percentage). Default: 100.
+seven_days_to_die_cfg_block_damage_ai: 100
+
+# AI damager to blocks during blood moon (percentage). Default: 100.
+seven_days_to_die_cfg_block_damage_aibm: 100
+
+# XP gain multiplier (percentage). Default: 100.
+seven_days_to_die_cfg_xp_multiplier: 100
+
+# Maximum player level for safe zone creation when spawned. Default: 5.
+seven_days_to_die_cfg_player_safe_zone_level: 5
+
+# Hours in world time created safe zone exists. Default: 5.
+seven_days_to_die_cfg_player_safe_zone_hours: 5
+
+###############################################################################
+# Game Rules
+###############################################################################
+
+# Enable cheat mode on? Default: False.
+seven_days_to_die_cfg_build_create: false
+
+# Real time per in game day (minutes). Default: 60.
+seven_days_to_die_cfg_day_night_length: 60
+
+# In game hours sun shines per day (game hours). Default: 18.
+seven_days_to_die_cfg_day_light_length: 18
+
+# Enable biome hazards and loot stage caps to promote biome progression?
+#
+# Loot stage caps are increased by completing biome challenges.
+#
+# Default: True.
+seven_days_to_die_cfg_biome_progression: true
+
+# Storm frequency (percentage).
+#
+# Values:
+#       0: Disabled.
+#     100: Default frequency (default).
+#   0-500: Frequency range.
+#
+# Default: 100.
+seven_days_to_die_cfg_storm_freq: 100
+
+# Penalty after dying.
+#
+# Values:
+#  0: Nothing.
+#  1: Classic XP Penalty (default).
+#  2: Injured - you keep most of your debuffs. Food and Water is set to 50% on
+#     respawn.
+#  3: Permanent Death - your character is completely reset. You will respawn
+#     with a fresh start within the saved game.
+#
+# Default: 1 (XP penalty).
+seven_days_to_die_cfg_death_penalty: 1
+
+# Drop player items on death.
+#
+# Values:
+#   0: None.
+#   1: All (default).
+#   2: Toolbelt only.
+#   3: Backpack only.
+#   4: Delete all.
+#
+# Default: 1 (all).
+seven_days_to_die_cfg_drop_on_death: 1
+
+# Drop player items on quit.
+#
+# Values:
+#   0: None.
+#   1: All (default).
+#   2: Toolbelt only.
+#   3: Backpack only.
+#
+# Default: 0 (none).
+seven_days_to_die_cfg_drop_on_quit: 0
+
+# Bedroll deadzone size.
+#
+# No zombies will spawn inside this area, and any cleared sleeper volumes that
+# touch a bedroll deadzone will not spawn after they've been cleared.
+#
+# Box radius is a box 2 times given value for each side length of Bedroll
+# deadzone.
+#
+# Default: 15.
+seven_days_to_die_cfg_bedroll_deadzone_size: 15
+
+# Days a bedroll stays active after owner was last online. Default: 45.
+seven_days_to_die_cfg_bedroll_expiry_time: 45
+
+# Allow first-time new players on server to spawn near friends?
+#
+# Values:
+#   0: Disabled.
+#   1: Always.
+#   2: Only near friends in forest biome (default).
+#
+# Default: 2
+seven_days_to_die_cfg_allow_spawn_near_friend: 2
+
+###############################################################################
+# Performance Related
+###############################################################################
+
+# Max spawned zombies at one time.
+#
+# Making this number too large (more than about 80) may cause servers to run at
+# poor framerates which will effect lag and play quality for clients.
+#
+# Default: 64.
+seven_days_to_die_cfg_max_spawned_zombies: 64
+
+# Max spawned animals at one time.
+#
+# If your server has a large number of players you can increase this limit to
+# add more wildlife. Animals don't consume as much CPU as zombies. This doesn't
+# cause more animals to spawn arbitrarily: The biome spawning system only
+# spawns a certain number of animals in a given area, but if you have lots of
+# players that are all spread out then you may be hitting the limit and can
+# increase it.
+#
+# Default: 50.
+seven_days_to_die_cfg_max_spawned_animals: 50
+
+# Max view distance a client may request.
+#
+# High impact on memory usage and performance.
+#
+# Values:
+#   6-12: View distance range.
+#
+# Default: 12.
+seven_days_to_die_cfg_server_max_allowed_view_distance: 12
+
+# Max chunk mesh layers enqueued during mesh generation.
+#
+# Reducing this will improve memory usage but may increase Chunk generation
+# time.
+#
+# Default: 1000.
+seven_days_to_die_cfg_max_queued_mesh_layers: 1000
+
+###############################################################################
+# Zombie Settings
+###############################################################################
+
+# Enable enemy spawning? Default: True.
+seven_days_to_die_cfg_enemy_spawn_mode: true
+
+# Enemy difficulty.
+#
+# Values:
+#   0: Normal (default).
+#   1: Feral.
+#
+# Default: 0.
+seven_days_to_die_cfg_enemy_difficulty: 0
+
+# Zombie feral sensing.
+#
+# Values:
+#   0: Off (default).
+#   1: Day.
+#   2: Night.
+#   3: All.
+#
+# Default: 0.
+seven_days_to_die_cfg_zombie_feral_sense: 0
+
+# Zombie daytime movement.
+#
+# Values:
+#   0: Walk (default).
+#   1: Jog.
+#   2: Run.
+#   3: Sprint.
+#   4: Nightmare.
+#
+# Default: 0.
+seven_days_to_die_cfg_zombie_move: 0
+
+# Zombie nighttime movement.
+#
+# Values:
+#   0: Walk.
+#   1: Jog.
+#   2: Run.
+#   3: Sprint (default).
+#   4: Nightmare.
+#
+# Default: 3.
+seven_days_to_die_cfg_zombie_move_night: 3
+
+# Zombie feral movement.
+#
+# Values:
+#   0: Walk.
+#   1: Jog.
+#   2: Run.
+#   3: Sprint (default).
+#   4: Nightmare.
+#
+# Default: 3.
+seven_days_to_die_cfg_zombie_feral_move: 3
+
+# Zombie blood moon movement.
+#
+# Values:
+#   0: Walk.
+#   1: Jog.
+#   2: Run.
+#   3: Sprint (default).
+#   4: Nightmare.
+#
+# Default: 3.
+seven_days_to_die_cfg_zombie_bm_move: 3
+
+# Blood moon frequency (game days). 0 Disables. Default: 7.
+seven_days_to_die_cfg_blood_moon_frequency: 7
+
+# Blood moon random variance (game days). 0 Disables. Default: 0.
+seven_days_to_die_cfg_blood_moon_range: 0
+
+# Hour number that red day number begins on blood moon day.
+#
+# Values:
+#   -1: Disables.
+#
+# Default: 8.
+seven_days_to_die_cfg_blood_moon_warning: 8
+
+# Number of zombies spawned during blood moons per player.
+#
+# Huge impact on performance. seven_days_to_die_cfg_max_spawned_zombies
+# overrides this number in multiplayer games. Game stage sets the max number of
+# zombies PER PARTY. Low game stage values can result in lower number of
+# zombies than seven_days_to_die_cfg_blood_moon_enemy_count.
+#
+# Default: 8.
+seven_days_to_die_cfg_blood_moon_enemy_count: 8
+
+###############################################################################
+# Loot
+###############################################################################
+
+# Loot abundance (percentage). Default: 100.
+seven_days_to_die_cfg_loot_abundance: 100
+
+# Lost respawn (days). Default: 30.
+seven_days_to_die_cfg_loot_respawn_days: 7
+
+# Airdrop frequency (game hours). 0 Disables. Default: 72.
+seven_days_to_die_cfg_air_drop_frequency: 72
+
+# Enable air drop markers on map/compass? Default: True.
+seven_days_to_die_cfg_air_drop_marker: true
+
+###############################################################################
+# Multiplayer
+###############################################################################
+
+# Shared kill XP/quest range. Default: 100.
+seven_days_to_die_cfg_party_shared_kill_range: 100
+
+# Player Killing Settings.
+#
+# Values:
+#   0: No killing.
+#   1: Kill allies only.
+#   2: Kill strangers only (default).
+#   3: Kill everyone.
+#
+# Default: 3.
+seven_days_to_die_cfg_player_killing_mode: 3
+
+###############################################################################
+# Land Claim Options
+###############################################################################
+
+# Maximum allowed land claims per player. Default: 5.
+seven_days_to_die_cfg_land_claim_count: 5
+
+# Size in blocks that is protected by a keystone. Default: 41.
+seven_days_to_die_cfg_land_claim_size: 41
+
+# Minimum keystone block distance between players (unless friends).
+#
+# Default: 30.
+seven_days_to_die_cfg_land_claim_deadzone: 30
+
+# Number of days player can be offline before their claims expire (days).
+#
+# Default: 7.
+seven_days_to_die_cfg_land_claim_expiry_time: 7
+
+# Controls how offline players land claims decay.
+#
+# All claims have full protection for the first 24hrs.
+#
+# Values:
+#   0: Slow - linear (default).
+#   1: Fast - exponential.
+#   2: None - full protection until claim expires.
+#
+# Default: 0.
+seven_days_to_die_cfg_land_claim_decay_mode: 0
+
+# Claim area block hardness increase when player is online.
+#
+# Values:
+#   0: Infinite (indestructible).
+#   #: Health multiplier.
+#
+# Default: 4 (4x health).
+seven_days_to_die_cfg_land_claim_online_durability_modifier: 4
+
+# Claim area block hardness increase when player is offline.
+#
+# Values:
+#   0: Infinite (indestructible).
+#   #: Health multiplier.
+#
+# Default: 4 (4x health).
+seven_days_to_die_cfg_land_claim_offline_durability_modifier: 4
+
+# Claim area hardness offline transition time after player logout (minutes).
+#
+# Default: 0.
+seven_days_to_die_cfg_land_claim_offline_delay: 0
+
+# Enable dynamic mesh system? Default: True.
+seven_days_to_die_cfg_dynamic_mesh_enabled: true
+
+# Dynamic mesh system only active in player LCB (Land Claim Block) areas?
+#
+# Default: True.
+seven_days_to_die_cfg_dynamic_mesh_land_claim_only: true
+
+# Dynamic Mesh LCB (Land Claim Block) chunk radius. Default: 3.
+seven_days_to_die_cfg_dynamic_mesh_land_claim_buffer: 3
+
+# Items processed concurrently.
+#
+# Higher values use more RAM.
+#
+# Default: 3.
+seven_days_to_die_cfg_dynamic_mesh_max_item_cache: 3
+
+# Required permission level to use twitch integration on server. Default: 90.
+seven_days_to_die_cfg_twitch_server_permission: 90
+
+# Allow twitch action during a blood moon?
+#
+# May cause server lag with extra zombies being spawned during blood moon.
+#
+# Default: False.
+seven_days_to_die_cfg_blood_moon_allowed: false
+
+# number of quests a player may contribute to quest tier progression per day.
+#
+# Quests after the limit can still be completed for rewards.
+#
+# Default: 4.
+seven_days_to_die_cfg_quest_progression_daily_limit: 4

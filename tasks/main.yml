@@ -1,14 +1,9 @@
 ---
-###############################################################################
-# Steam Tasks
-###############################################################################
-# Developer Notes:
-# Use game names for directory and unique file names (excluding main) within:
-# duplicate file names in a role will lead to nondeterministic behavior.
-
-- ansible.builtin.include_tasks: manage_users.yml
-- ansible.builtin.include_tasks: core.yml
-- ansible.builtin.include_tasks: steamcmd/main.yml
-- ansible.builtin.include_tasks: wine/main.yml
-- ansible.builtin.include_tasks: seven_days_to_die/main.yml
-  when: steam_7days_enable
+- name: 'Prep'
+  ansible.builtin.include_tasks: 'prep.yml'
+- name: 'Install'
+  ansible.builtin.include_tasks: 'install.yml'
+- name: 'Config'
+  ansible.builtin.include_tasks: 'config.yml'
+- name: 'Validate'
+  ansible.builtin.include_tasks: 'validate.yml'

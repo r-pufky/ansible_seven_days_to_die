@@ -1,0 +1,79 @@
+---
+###############################################################################
+# Install
+###############################################################################
+#
+# Generates:
+#   _seven_days_to_die: dict - Role runtime specific config.
+#
+# Reference:
+# * https://developer.valvesoftware.com/wiki/7_Days_to_Die_Dedicated_Server
+
+- name: 'Install | steamcmd'
+  ansible.builtin.import_role:
+    name: 'r_pufky.game.steam'
+
+- name: 'Install | cache steam user'
+  ansible.builtin.set_fact:
+    _seven_days_to_die:
+      user: '{{ _steam_srv_user.raw }}'
+      uid: '{{ _steam_srv_user.role_uid }}'
+      group: '{{ _steam_srv_group.raw }}'
+      gid: '{{ _steam_srv_group.role_gid }}'
+      home: '{{ _steam_srv_user.role_home }}'
+      share: '{{ _steam_srv_user.role_share }}'
+      saves: '{{ _steam_srv_user.role_share ~ "/7DaysToDie/Saves" }}'
+
+- name: 'Install | create server directories'
+  ansible.builtin.file:
+    path: '{{ item }}'
+    owner: '{{ _seven_days_to_die.uid }}'
+    group: '{{ _seven_days_to_die.gid }}'
+    mode: '0755'
+    state: 'directory'
+  loop:
+    - '{{ seven_days_to_die_srv_root }}'
+    - '{{ _seven_days_to_die.saves }}'
+
+- name: 'Install | create backup directory'
+  when: seven_days_to_die_srv_backup_enable
+  ansible.builtin.file:
+    path: '{{ seven_days_to_die_srv_backup_root }}'
+    owner: '{{ _seven_days_to_die.uid }}'
+    group: '{{ _seven_days_to_die.gid }}'
+    mode: '0755'
+    state: 'directory'
+  become: true
+  become_user: '{{
+      _steam_srv_user.raw
+      if seven_days_to_die_srv_user_data_manage_enable else
+      "root"
+    }}'
+
+- name: 'Install | updating server 🗘'
+  when: seven_days_to_die_srv_update_server
+  ansible.builtin.debug:
+    msg: |
+      ╭───────────────────────────────────────────────────────────────────╮
+      │                                                                   │
+      │      Server is being updated. This will take a few minutes.       │
+      │                                                                   │
+      ├───────────────────────────────────────────────────────────────────╯
+      │ ~15GB to synchronize.
+
+- name: 'Install | update server {{ seven_days_to_die_role_app_id }}'
+  when: seven_days_to_die_srv_update_server
+  ansible.builtin.shell: >-
+    /usr/games/steamcmd
+    +@sSteamCmdForcePlatformType {{ seven_days_to_die_role_platform }}
+    +force_install_dir {{ seven_days_to_die_srv_root }}
+    +login anonymous
+    +app_update {{ seven_days_to_die_role_app_id }}
+    {{ seven_days_to_die_srv_extra_opts }}
+    +quit
+  args:
+    executable: '/bin/bash'
+    chdir: '{{ _seven_days_to_die.home }}'
+  changed_when: false
+  become: true
+  become_user: '{{ _seven_days_to_die.user }}'

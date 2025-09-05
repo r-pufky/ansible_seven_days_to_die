@@ -1,0 +1,44 @@
+---
+- name: 'Verify'
+  hosts: 'all'
+  gather_facts: false
+  tasks:
+    - name: 'Verify | /home/steam/seven_days_to_die'
+      ansible.builtin.include_role:
+        name: 'r_pufky.lib.tests'
+        tasks_from: 'file.yml'
+      vars:
+        test_name: 'Verify | /home/steam/seven_days_to_die'
+        test_file: '/home/steam/seven_days_to_die'
+        test_owner: 'steam'
+        test_group: 'steam'
+        test_mode: '0755'
+        test_state: 'directory'
+        test_diff: true
+
+    - name: 'Verify | serverconfig.xml'
+      ansible.builtin.include_role:
+        name: 'r_pufky.lib.tests'
+        tasks_from: 'copy.yml'
+      vars:
+        test_name: 'Verify | serverconfig.xml'
+        test_src: 'files/serverconfig.xml'
+        test_file: '/home/steam/seven_days_to_die/serverconfig.xml'
+        test_owner: 'steam'
+        test_group: 'steam'
+        test_mode: '0600'
+        test_diff: true
+
+    # Game always injects templated data into rendered files.
+    - name: 'Verify | serveradmin.xml'
+      ansible.builtin.include_role:
+        name: 'r_pufky.lib.tests'
+        tasks_from: 'copy.yml'
+      vars:
+        test_name: 'Verify | serveradmin.xml'
+        test_src: 'files/serveradmin.xml'
+        test_file: '/home/steam/.local/share/7DaysToDie/Saves/serveradmin.xml'
+        test_owner: 'steam'
+        test_group: 'steam'
+        test_mode: '0600'
+        test_diff: true

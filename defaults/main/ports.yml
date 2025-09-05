@@ -1,0 +1,27 @@
+---
+###############################################################################
+# Ports Configuration
+###############################################################################
+# Manage firewall with r_pufky.deb.ufw.
+
+seven_days_to_die_srv_ports:
+  - proto: 'udp'
+    from_ip: 'any'
+    to_port: '26900:26903'
+    direction: 'in'
+    comment: 'seven days to die clients'
+  - proto: 'tcp'
+    from_ip: 'any'
+    to_port: 26900
+    direction: 'in'
+    comment: 'seven days to die server'
+  - proto: 'tcp'
+    from_ip: 'any'
+    to_port: 8080
+    direction: 'in'
+    comment: 'seven days to die web dashboard'
+  - proto: 'tcp'
+    from_ip: 'any'
+    to_port: 8081
+    direction: 'in'
+    comment: 'seven days to die telnet'

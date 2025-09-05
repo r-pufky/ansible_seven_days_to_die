@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<adminTools>
+  <users>
+    {% for admin in seven_days_to_die_cfg_server_admins %}
+    <user platform="{{ admin.platform }}" userid="{{ admin.id }}" permission_level="{{ admin.level }}" />
+    {% endfor %}
+  </users>
+  <whitelist>
+  {% if seven_days_to_die_cfg_whitelist | length > 0 %}
+    {% for user in seven_days_to_die_cfg_whitelist %}
+    <user platform="{{ user.platform }}" userid="{{ user.id }}" />
+    {% endfor %}
+  {% endif %}
+  </whitelist>
+  <blacklist>
+  {% if seven_days_to_die_cfg_blacklist | length > 0 %}
+    {% for user in seven_days_to_die_cfg_blacklist %}
+    <blacklisted platform="{{ user.platform }}" userid="{{ user.id }}" unbandate="{{ user.unbandate }}" reason="{{ user.reason }}" />
+    {% endfor %}
+  {% endif %}
+  </blacklist>
+  <permissions>
+    {% for perm in seven_days_to_die_cfg_permissions %}
+    <permission cmd="{{ perm.command }}" permission_level="{{ perm.level }}" />
+    {% endfor %}
+  </permissions>
+  <apitokens>
+    {% for user in seven_days_to_die_cfg_api_tokens %}
+    <token name="{{ user.name }}" secret="{{ user.secret }}" permission_level="{{ user.level }}" />
+    {% endfor %}
+  </apitokens>
+</adminTools>

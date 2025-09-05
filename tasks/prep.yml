@@ -1,0 +1,29 @@
+---
+# yamllint disable rule:line-length
+###############################################################################
+# Prep
+###############################################################################
+# Service may not exist if first install. Ensure server directory is created.
+
+- name: 'Prep | assert mutually exclusive white/blacklists'
+  when: seven_days_to_die_cfg_whitelist | length > 0
+  ansible.builtin.assert:
+    quiet: true
+    that: seven_days_to_die_cfg_blacklist | length == 0
+    fail_msg: |
+      ╭───────────────────────────────────────────────────────────────────╮
+      │                                                                   │
+      │          Whitelist and Blacklist are mutually exclusive.          │
+      │                                                                   │
+      ├───────────────────────────────────────────────────────────────────╯
+      │ Set only one:
+      │ * seven_days_to_die_cfg_whitelist: {{ seven_days_to_die_cfg_whitelist }}
+      │ * seven_days_to_die_cfg_blacklist: {{ seven_days_to_die_cfg_blacklist }}
+
+- name: 'Prep | stop services'
+  ansible.builtin.systemd:
+    name: 'Install | {{ item }}'
+    state: 'stopped'
+  failed_when: false
+  loop:
+    - 'seven_days_to_die.service'

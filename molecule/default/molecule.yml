@@ -1,0 +1,82 @@
+---
+###############################################################################
+# Default
+###############################################################################
+# Default values result in running Seven Days to Die server.
+#
+# Tests:
+# * serveradmin.xml is rendered correctly.
+# * serverconfig.xml is rendered correctly.
+# * Backup service/timeer with hot backups disabled are correct.
+# * Admins are created.
+# * Whitelist is correct.
+# * API tokens are correct.
+# * Seven Days to Die server is running.
+
+dependency:
+  name: 'galaxy'
+driver:
+  name: 'podman'
+provisioner:
+  name: 'ansible'
+  config_options:
+    defaults:
+      interpreter_python: 'auto_silent'
+      callback_whitelist: 'profile_tasks, timer, yaml'
+    ssh_connection:
+      pipelining: false
+  inventory:
+    host_vars:
+      seven_days_to_die-debian-13-default:
+        seven_days_to_die_srv_backup_enable: true
+        seven_days_to_die_srv_backup_hot_enable: false
+        seven_days_to_die_web_dashboard_enabled: true
+        seven_days_to_die_cfg_server_admin_enable: true
+        seven_days_to_die_cfg_server_admins:
+          - platform: 'Steam'
+            comment: 'Kinyajuu'
+            id: 76561198021925107
+            level: 0
+        seven_days_to_die_cfg_whitelist:
+          - platform: 'Steam'
+            id: 76561198021925107
+        seven_days_to_die_cfg_api_tokens:
+          - name: 'test'
+            secret: 'test'
+            level: 0
+platforms:
+  - name: 'seven_days_to_die-debian-13-default'
+    image: 'ghcr.io/hifis-net/debian-systemd:13'
+    systemd: 'always'
+    volumes:
+      - '/sys/fs/cgroup:/sys/fs/cgroup:ro'
+    command: '/lib/systemd/systemd'
+    pre_build_image: true
+    published_ports:
+      - '26900:26900/udp'
+      - '26901:26901/udp'
+      - '26902:26902/udp'
+      - '26903:26903/udp'
+      - '26900:26900/tcp'
+      - '8080/tcp'
+      - '8081/tcp'
+verifier:
+  name: 'ansible'
+lint: |
+  set -e
+  yamllint .
+  ansible-lint .
+scenario:
+  test_sequence:
+    # - 'dependency'
+    # - 'cleanup'
+    - 'destroy'
+    - 'syntax'
+    - 'create'
+    # - 'prepare'
+    - 'converge'
+    # - 'idempotence'  # services always restarted.
+    # - 'side_effect'
+    - 'verify'
+    # - 'cleanup'
+    - 'destroy'
