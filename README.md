@@ -4,6 +4,12 @@
 ## Requirements
 [supported platforms](https://github.com/r-pufky/ansible_seven_days_to_die/blob/main/meta/main.yml)
 
+Resource | Minimum | Recommended
+---------|---------|------------
+CPU      | 2c/4t   | 4c/8t@3.0Ghz
+RAM      | 6GB     | 12GB
+Disk     | 15GB    | 20GB
+
 ## Role Variables
 [defaults](https://github.com/r-pufky/ansible_seven_days_to_die/tree/main/defaults/main)
 
