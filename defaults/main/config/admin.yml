@@ -6,7 +6,7 @@
 # Specifying admins and restrictions requires user ID lookups on platforms that
 # users are on.
 #
-# Web console users ('console → createwebuser' while playing) are reset each
+# Web console users ('console ➔ createwebuser' while playing) are reset each
 # time role is applied.
 #
 # Steam ID may be retrieved from any of the following:
@@ -28,7 +28,7 @@
 #
 #   http://{server}:8080
 #
-#   Login → console
+#   Login ➔ console
 #
 # Reference:
 # * https://shockbyte.com/help/knowledgebase/articles/how-to-find-a-player-s-eos-id-in-7-days-to-die
