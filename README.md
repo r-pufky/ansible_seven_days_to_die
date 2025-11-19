@@ -24,6 +24,8 @@ All ports and protocols have been defined for the role.
 
 ## Example Playbook
 Read defaults documentation.
+[Additional documentation](http://r-pufky.github.io/r-pufky/docs/games/seven_days_to_die).
+
 
 The following example will get an instance quickly up and running. Server will
 be created using the steamcmd user from `r_pufky.game.steam`.
