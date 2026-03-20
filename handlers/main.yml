@@ -1,0 +1,31 @@
+---
+###############################################################################
+# Handlers
+###############################################################################
+
+- name: 'Handlers | load seven_days_to_die_backup'
+  listen:
+    - 'Handlers | enable seven_days_to_die_backup'
+  ansible.builtin.systemd:
+    name: '{{ item }}'
+    enabled: true
+    daemon_reload: true
+  loop:
+    - 'seven_days_to_die_backup.service'
+    - 'seven_days_to_die_backup.timer'
+
+- name: 'Handlers | seven_days_to_die_backup.timer (tick)'
+  listen:
+    - 'Handlers | enable seven_days_to_die_backup'
+  ansible.builtin.systemd:
+    name: 'seven_days_to_die_backup.timer'
+    state: 'started'
+
+- name: 'Handlers | disable seven_days_to_die_backup'
+  ansible.builtin.systemd:
+    name: '{{ item }}'
+    enabled: false
+    state: 'stopped'
+  loop:
+    - 'seven_days_to_die_backup.service'
+    - 'seven_days_to_die_backup.timer'

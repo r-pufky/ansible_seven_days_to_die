@@ -1,0 +1,28 @@
+---
+###############################################################################
+# Backup
+###############################################################################
+# Deploy backup services.
+
+- name: 'Backup | systemd | enable backup'
+  when: seven_days_to_die_flg_backup
+  notify: 'Handlers | enable seven_days_to_die_backup'
+  ansible.builtin.template:
+    src: '{{ "systemd/" ~ item ~ ".j2" }}'
+    dest: '{{ "/etc/systemd/system/" ~ item }}'
+    owner: 'root'
+    group: 'root'
+    mode: '0644'
+  loop:
+    - 'seven_days_to_die_backup.service'
+    - 'seven_days_to_die_backup.timer'
+
+- name: 'Backup | systemd | disable backup'
+  when: not seven_days_to_die_flg_backup
+  notify: 'Handlers | disable seven_days_to_die_backup'
+  ansible.builtin.file:
+    path: '{{ "/etc/systemd/system/" ~ item }}'
+    state: 'absent'
+  loop:
+    - 'seven_days_to_die_backup.service'
+    - 'seven_days_to_die_backup.timer'

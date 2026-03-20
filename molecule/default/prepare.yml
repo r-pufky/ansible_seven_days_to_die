@@ -1,0 +1,9 @@
+---
+- name: 'Prepare'
+  hosts: 'all'
+  gather_facts: false
+  tasks:
+    - name: 'Prepare | inject | required testing packages'
+      ansible.builtin.apt:
+        name: 'python3-lxml'
+        state: 'present'

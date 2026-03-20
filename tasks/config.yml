@@ -12,154 +12,47 @@
 # Reference:
 # * https://developer.valvesoftware.com/wiki/7_Days_to_Die_Dedicated_Server
 
-- name: 'Config | set serverconfig.xml'
+- name: '{{
+      "Update | filesystem | set " ~ seven_days_to_die__cfg._config_file
+    }}'
+  when: seven_days_to_die__cfg._server_config | length > 0
   ansible.builtin.template:
-    src: 'serverconfig.xml.j2'
-    dest: '{{ seven_days_to_die_srv_root ~ "/serverconfig.xml" }}'
-    owner: '{{ _seven_days_to_die.uid }}'
-    group: '{{ _seven_days_to_die.gid }}'
-    mode: '0600'
+    src: '{{ seven_days_to_die__cfg._server_config }}'
+    dest: '{{ seven_days_to_die__cfg._config_file }}'
+    owner: '{{ steam__ctx._user }}'
+    group: '{{ steam__ctx._group }}'
+    mode: '0664'  # Game enforced.
 
-- name: 'Config | set serveradmin.xml'
-  when: seven_days_to_die_cfg_server_admin_enable
+- name: '{{
+      "Update | filesystem | set minimal " ~
+      seven_days_to_die__cfg._config_file
+    }}'
+  when: seven_days_to_die__cfg._server_config | length == 0
+  ansible.builtin.copy:
+    src: 'files/default/serverconfig.xml'
+    dest: '{{ seven_days_to_die__cfg._config_file }}'
+    owner: '{{ steam__ctx._user }}'
+    group: '{{ steam__ctx._group }}'
+    mode: '0664'  # Game enforced.
+
+- name: '{{
+      "Update | filesystem | set " ~ seven_days_to_die__cfg._admin_file
+    }}'
+  when: seven_days_to_die__cfg._server_admin | length > 0
   ansible.builtin.template:
-    src: 'serveradmin.xml.j2'
-    dest: '{{ _seven_days_to_die.saves ~ "/serveradmin.xml" }}'
-    owner: '{{ _seven_days_to_die.uid }}'
-    group: '{{ _seven_days_to_die.gid }}'
-    mode: '0600'
+    src: '{{ seven_days_to_die__cfg._server_admin }}'
+    dest: '{{ seven_days_to_die__cfg._admin_file }}'
+    owner: '{{ steam__ctx._user }}'
+    group: '{{ steam__ctx._group }}'
+    mode: '0600'  # Game enforced.
 
-- name: 'Config | reset serveradmin.xml'
-  when: not seven_days_to_die_cfg_server_admin_enable
-  ansible.builtin.file:
-    path: '{{ _seven_days_to_die.saves ~ "/serveradmin.xml" }}'
-    state: 'absent'
-
-# yamllint disable rule:line-length
-- name: 'Config | create service'
-  ansible.builtin.include_role:
-    name: 'r_pufky.deb.systemd'
-  vars:
-    systemd_daemon_reload_enable: true
-    systemd_services:
-      - name: 'seven_days_to_die'
-        state: 'present'
-        drop_in: false
-        unit:
-          description: 'Seven Days to Die Dedicated Server'
-          after:
-            - 'network.target'
-        service:
-          type: 'simple'
-          exec_start_pre:
-            - >-
-              /usr/games/steamcmd
-              +@sSteamCmdForcePlatformType {{ seven_days_to_die_role_platform }}
-              +force_install_dir {{ seven_days_to_die_srv_root }}
-              +login anonymous
-              +app_update {{ seven_days_to_die_role_app_id }}
-              {{ seven_days_to_die_srv_extra_opts }}
-              +quit
-          exec_start:
-            - >-
-              {{ seven_days_to_die_srv_root }}/startserver.sh
-              -configfile={{ seven_days_to_die_srv_root }}/serverconfig.xml
-          exec_reload:
-            - '/bin/kill -s HUP $MAINPID'
-          exec_stop:
-            - '/bin/kill -s QUIT $MAINPID'
-          pid_file: '/run/seven_days_to_die.pid'
-          timeout_start_sec: 'infinity'
-          timeout_stop_sec: 60
-          restart: 'always'
-        exec:
-          # limitNOFILE default is 524288 in Trixie.
-          user: '{{ _seven_days_to_die.user }}'
-          group: '{{ _seven_days_to_die.group }}'
-          working_directory: '{{ seven_days_to_die_srv_root }}'
-          environment:
-            - var: 'LD_LIBRARY_PATH'
-              value: '{{ seven_days_to_die_srv_root }}:{{ seven_days_to_die_srv_root }}/bin'
-        install:
-          wanted_by:
-            - 'multi-user.target'
-
-- name: 'Config | create backup service'
-  when: seven_days_to_die_srv_backup_enable
-  ansible.builtin.include_role:
-    name: 'r_pufky.deb.systemd'
-  vars:
-    systemd_daemon_reload_enable: true
-    systemd_services:
-      - name: 'seven_days_to_die_backup'
-        state: 'present'
-        drop_in: false
-        unit:
-          description: 'Seven Days to Die backup.'
-          requires:
-            - 'seven_days_to_die_backup.timer'
-        service:
-          type: 'oneshot'
-          exec_start_pre:
-            - '{{
-                ""
-                if seven_days_to_die_srv_backup_hot_enable else
-                "/usr/bin/systemctl stop seven_days_to_die.service"
-              }}'
-          exec_start:
-            - >-
-              /usr/bin/tar -cvJf
-              "{{ seven_days_to_die_srv_backup_root }}/$(date --iso-8601).tar.xz"
-              "{{ _seven_days_to_die.saves }}"
-          exec_start_post:
-            - '{{
-                ""
-                if seven_days_to_die_srv_backup_hot_enable else
-                "/usr/bin/systemctl start seven_days_to_die.service"
-              }}'
-          remain_after_exit: true
-        exec:
-          user: '{{ _seven_days_to_die.user }}'
-          group: '{{ _seven_days_to_die.group }}'
-          working_directory: '{{ seven_days_to_die_srv_backup_root }}'
-    systemd_timers:
-      - name: 'seven_days_to_die_backup'
-        state: 'present'
-        drop_in: false
-        unit:
-          description: 'Seven Days to Die backup timer.'
-        timer:
-          unit: 'seven_days_to_die_backup.service'
-          on_boot_sec:
-            '{{ seven_days_to_die_srv_backup_schedule | default("1d") }}'
-        install:
-          wanted_by:
-            - 'timers.target'
-
-- name: 'Config | disable backup service'
-  when: not seven_days_to_die_srv_backup_enable
-  ansible.builtin.include_role:
-    name: 'r_pufky.deb.systemd'
-  vars:
-    systemd_daemon_reload_enable: true
-    systemd_services:
-      - name: 'seven_days_to_die_backup'
-        drop_in: false
-        state: 'absent'
-    systemd_timers:
-      - name: 'seven_days_to_die_backup'
-        drop_in: false
-        state: 'absent'
-
-- name: 'Config | flush handlers'
-  ansible.builtin.meta: 'flush_handlers'
-
-- name: 'Config | start services'
-  ansible.builtin.systemd:
-    name: 'Config | {{ item }}'
-    enabled: true
-    daemon_reload: true
-    state: 'started'
-  failed_when: false
-  loop:
-    - 'seven_days_to_die.service'
+- name: '{{
+      "Update | filesystem | set minimal " ~ seven_days_to_die__cfg._admin_file
+    }}'
+  when: seven_days_to_die__cfg._server_admin | length == 0
+  ansible.builtin.copy:
+    src: 'files/default/serverconfig.xml'
+    dest: '{{ seven_days_to_die__cfg._admin_file }}'
+    owner: '{{ steam__ctx._user }}'
+    group: '{{ steam__ctx._group }}'
+    mode: '0664'  # Game enforced.

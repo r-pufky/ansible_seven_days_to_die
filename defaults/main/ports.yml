@@ -4,7 +4,7 @@
 ###############################################################################
 # Manage firewall with r_pufky.deb.ufw.
 
-seven_days_to_die_srv_ports:
+seven_days_to_die_ports:
   - proto: 'udp'
     from_ip: 'any'
     to_port: '26900:26903'

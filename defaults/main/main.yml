@@ -2,59 +2,84 @@
 ###############################################################################
 # 7 Days to Die
 ###############################################################################
-#       Minimum   Recommended
-# CPU:  2c/4t     4c/8t@3.0Ghz
-# RAM:  6GB       12GB
-# Disk: 15GB      20GB
 
-# Root install location. Default: '/home/steam/seven_days_to_die'.
-seven_days_to_die_srv_root: '/home/steam/seven_days_to_die'
+# 1. Force Seven Days to Die server updates if already installed?
+#
+# Server will be updated during role application and as a pre-start task for
+# service start. Disable to prevent updates after initial installation.
+#
+# Default: False.
+seven_days_to_die_flg_update: false
+
+# 3. Enable scheduled server backup?
+seven_days_to_die_flg_backup: false
+
+###############################################################################
+# Service
+###############################################################################
 
 # Additional steamcmd options to use during app_update.
 #
-# Such as validation (validate).
+# Use 'validate' to checksum installed files for corruption.
 #
-# Default: ''.
-#
-# Reference:
-# * https://developer.valvesoftware.com/wiki/SteamCMD
-seven_days_to_die_srv_extra_opts: ''
-
-# Update 7 Days to Die server? Default: True.
-seven_days_to_die_srv_update_server: true
-
-# Validation delay (seconds).
-#
-# Specific machines may be slower to start dedicated server, resulting in
-# validation checks failing. This introduces a small delay to allow service
-# time to report running. 0 Disables.
-#
-# Default: 2 (seconds).
-seven_days_to_die_srv_validate_delay: 2
+# Default: [].
+seven_days_to_die_srv_update_opts: []
 
 ###############################################################################
+# Config
+###############################################################################
+
+# serverconfig.xml to set.
+#
+# Ansible controller path to source serverconfig.xml (treated as a jinja2
+# template allowing for ansible variable interpretation). Overwrites existing
+# /home/steam/seven_days_to_die/serverconfig.xml.
+#
+# A default config that works with the role will be deployed if no config file
+# is specified (see files/default/serverconfig.xml):
+#
+# Role contains two example configurations:
+# * files/default - Vanilla auto-generated server settings.
+# * files/secured - Vanilla with telnet disabled (recommended).
+#
+# seven_days_to_die_cfg_server_config:
+#   'host_vars/sat.example.com/data/serverconfig.xml'
+#
+# Default: '' (use auto-generated defaults on startup).
+#
+# Reference:
+# * https://r-pufky.github.io/docs/games/seven_days_to_die
+# * https://developer.valvesoftware.com/wiki/7_Days_to_Die_Dedicated_Server
+seven_days_to_die_cfg_server_config: ''
+
+# serveradmin.xml to set.
+#
+# Ansible controller path to source serveradmin.xml (treated as a jinja2
+# template allowing for ansible variable interpretation). Overwrites existing
+# /home/steam/seven_days_to_die/serveradmin.xml.
+#
+# A default config that works with the role will be deployed if no config file
+# is specified (see files/default/serveradmin.xml):
+#
+# Role contains two example configurations:
+# * files/default - Vanilla auto-generated server settings.
+# * files/secured - Vanilla with telnet disabled (recommended).
+#
+# seven_days_to_die_cfg_server_admin:
+#   'host_vars/sat.example.com/data/serveradmin.xml'
+#
+# Default: '' (use auto-generated defaults on startup).
+#
+# Reference:
+# * https://r-pufky.github.io/docs/games/seven_days_to_die
+# * https://developer.valvesoftware.com/wiki/7_Days_to_Die_Dedicated_Server
+seven_days_to_die_cfg_server_admin: ''
+
 # Backup
 ###############################################################################
 
 # Root backup location. Default: '/srv/backup/seven_days_to_die'.
-seven_days_to_die_srv_backup_root: '/srv/backup/seven_days_to_die'
-
-# Enable user management of media files?
-#
-# Use steam_srv_user (inferred from r_pufky.game.steam results) to execute
-# media management commands. Role applies media permissions using 'root' by
-# default. For mounted data locations (NFS with squashed mounts, mapped
-# container mounts, etc) the local root user will not have sufficient
-# privileges to modify these files.
-#
-# Applies to:
-# * seven_days_to_die_srv_backup_root
-#
-# Default: False.
-seven_days_to_die_srv_user_data_manage_enable: false
-
-# Enable server backups? Default: False.
-seven_days_to_die_srv_backup_enable: false
+seven_days_to_die_cfg_backup_dir: '/srv/backup/seven_days_to_die'
 
 # Enable hot backups?
 #
@@ -62,7 +87,7 @@ seven_days_to_die_srv_backup_enable: false
 # WILL lead to data corruption.
 #
 # Default: False.
-seven_days_to_die_srv_backup_hot_enable: false
+seven_days_to_die_cfg_backup_hot: false
 
 # Backup schedule (systemd TIME format). Default: '1d' (daily).
-seven_days_to_die_srv_backup_schedule: '1d'
+seven_days_to_die_cfg_backup_schedule: '1d'

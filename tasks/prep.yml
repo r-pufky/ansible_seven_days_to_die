@@ -1,29 +1,31 @@
 ---
-# yamllint disable rule:line-length
 ###############################################################################
-# Prep
+# Pre Execution Tasks
 ###############################################################################
-# Service may not exist if first install. Ensure server directory is created.
+# Only use data annotations in role after merging role, defaults, runtime data.
+# Service may not exist if first install.
 
-- name: 'Prep | assert mutually exclusive white/blacklists'
-  when: seven_days_to_die_cfg_whitelist | length > 0
-  ansible.builtin.assert:
-    quiet: true
-    that: seven_days_to_die_cfg_blacklist | length == 0
-    fail_msg: |
-      ╭───────────────────────────────────────────────────────────────────╮
-      │                                                                   │
-      │          Whitelist and Blacklist are mutually exclusive.          │
-      │                                                                   │
-      ├───────────────────────────────────────────────────────────────────╯
-      │ Set only one:
-      │ * seven_days_to_die_cfg_whitelist: {{ seven_days_to_die_cfg_whitelist }}
-      │ * seven_days_to_die_cfg_blacklist: {{ seven_days_to_die_cfg_blacklist }}
+- name: 'Prep | fact | record start time'
+  ansible.builtin.set_fact:
+    seven_days_to_die__srv: "{{ seven_days_to_die___release | r_pufky.data.v3(
 
-- name: 'Prep | stop services'
+        _start=now(utc=True, fmt='%Y-%m-%dT%H%M%S'),
+
+        _update_opts=seven_days_to_die_srv_update_opts | join(' '),
+      ) }}"
+    seven_days_to_die__cfg: "{{ seven_days_to_die___app | r_pufky.data.v3(
+
+        _server_config=seven_days_to_die_cfg_server_config,
+        _server_admin=seven_days_to_die_cfg_server_admin,
+        _backup_dir=(
+          seven_days_to_die_cfg_backup_dir | regex_replace('\\/$', '')
+        ),
+        _backup_hot=seven_days_to_die_cfg_backup_hot,
+        _backup_schedule=seven_days_to_die_cfg_backup_schedule,
+      ) }}"
+
+- name: 'Prep | systemd | stop seven_days_to_die.service'
   ansible.builtin.systemd:
-    name: '{{ item }}'
+    name: 'seven_days_to_die.service'
     state: 'stopped'
   failed_when: false
-  loop:
-    - 'seven_days_to_die.service'

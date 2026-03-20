@@ -1,0 +1,9 @@
+[Unit]
+Description=Seven Days to Die backup timer.
+Requires=seven_days_to_die_backup.service
+
+[Timer]
+OnBootSec={{ seven_days_to_die__cfg._backup_schedule | default("1d") }}
+
+[Install]
+WantedBy=timers.target

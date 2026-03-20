@@ -1,0 +1,39 @@
+---
+###############################################################################
+# Seven Days to Die Options
+###############################################################################
+#
+# Updates:
+# * Version is determined by 'GamePref.GameVersion' in logs.
+# * KEEP a separate change log as changes are made.
+# * Use bare-metal docs to validate package/process changes.
+# * Update defaults.
+# * Update tests for any changes.
+# * Standard validation testing (yamllint, ansible-lint, to-do, no-qa).
+#
+# Reference:
+# * https://developer.valvesoftware.com/wiki/7_Days_to_Die_Dedicated_Server
+
+seven_days_to_die___release: "{{ {} | r_pufky.data.v3(
+
+    _date='2026-03-20',
+    _debian='trixie',
+    _app='V2.5',
+    _app_id=294420,
+    _platform='linux',
+  ) }}"
+
+seven_days_to_die___app: "{{ {} | r_pufky.data.v3(
+
+    _app='/home/steam/seven_days_to_die/startserver.sh',
+    _root_dir='/home/steam/seven_days_to_die',
+    _config_file='/home/steam/seven_days_to_die/serverconfig.xml',
+    _admin_file='/home/steam/seven_days_to_die/serveradmin.xml',
+    _save_dir='/home/steam/.local/share/7DaysToDie/Saves',
+    _steamcmd=(
+      '/usr/games/steamcmd ' ~
+      '+@sSteamCmdForcePlatformType ' ~ seven_days_to_die___release._platform ~
+      ' +force_install_dir /home/steam/seven_days_to_die ' ~
+      '+login anonymous '
+    ),
+  ) }}"

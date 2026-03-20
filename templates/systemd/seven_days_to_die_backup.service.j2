@@ -1,0 +1,21 @@
+[Unit]
+Description=Seven Days to Die backup.
+Requires=seven_days_to_die_backup.timer
+After=network.target
+Wants=network.target
+
+[Service]
+Type=oneshot
+{% if not seven_days_to_die__cfg._backup_hot %}
+ExecStartPre=/usr/bin/systemctl stop seven_days_to_die.service
+{% endif %}
+ExecStart=/bin/bash -c '/usr/bin/tar -cvJf "{{ seven_days_to_die__cfg._backup_dir }}/$(date --iso-8601).tar.xz" "{{ seven_days_to_die__cfg._save_dir }}"'
+{% if not seven_days_to_die__cfg._backup_hot %}
+ExecStartPost=/usr/bin/systemctl start seven_days_to_die.service
+{% endif %}
+WorkingDirectory={{ seven_days_to_die__cfg._root_dir }}
+User=root
+Group=root
+
+[Install]
+WantedBy=multi-user.target

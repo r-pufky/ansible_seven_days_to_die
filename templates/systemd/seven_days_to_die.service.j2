@@ -1,0 +1,26 @@
+[Unit]
+Description=Seven Days to Die Dedicated Server.
+After=network.target
+Wants=network.target
+
+[Service]
+Type=simple
+{% if seven_days_to_die_flg_update %}
+ExecStartPre={{ seven_days_to_die__cfg._steamcmd }} +app_update {{ seven_days_to_die__srv._app_id }} {{ seven_days_to_die__srv._update_opts }} +quit
+{% endif %}
+ExecStart={{ seven_days_to_die__cfg._app }} -configfile={{ seven_days_to_die__cfg._config_file }}
+WorkingDirectory={{ seven_days_to_die__cfg._root_dir }}
+Environment="LD_LIBRARY_PATH={{ seven_days_to_die__cfg._root_dir }}:{{ seven_days_to_die__cfg._root_dir }}/bin"
+ExecReload=/bin/kill -s HUP $MAINPID
+ExecStop=/bin/kill -s QUIT $MAINPID
+PIDFile=/run/seven_days_to_die.pid
+TimeoutStartSec=infinity
+TimeoutStopSec=60s
+Restart=always
+# limitNOFILE default is 524288 in Trixie.
+User={{ steam__ctx._user }}
+Group={{ steam__ctx._group }}
+
+[Install]
+WantedBy=multi-user.target
+

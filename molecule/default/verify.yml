@@ -3,42 +3,30 @@
   hosts: 'all'
   gather_facts: false
   tasks:
-    - name: 'Verify | /home/steam/seven_days_to_die'
-      ansible.builtin.include_role:
-        name: 'r_pufky.lib.tests'
-        tasks_from: 'file.yml'
-      vars:
-        test_name: 'Verify | /home/steam/seven_days_to_die'
-        test_file: '/home/steam/seven_days_to_die'
-        test_owner: 'steam'
-        test_group: 'steam'
-        test_mode: '0755'
-        test_state: 'directory'
-        test_diff: true
+    - name: 'Prepare | import role variables'
+      ansible.builtin.include_vars:
+        file: '{{
+            lookup("env", "MOLECULE_PROJECT_DIRECTORY") ~ "/vars/main.yml"
+          }}'
 
-    - name: 'Verify | serverconfig.xml'
-      ansible.builtin.include_role:
-        name: 'r_pufky.lib.tests'
-        tasks_from: 'copy.yml'
-      vars:
-        test_name: 'Verify | serverconfig.xml'
-        test_src: 'files/serverconfig.xml'
-        test_file: '/home/steam/seven_days_to_die/serverconfig.xml'
-        test_owner: 'steam'
-        test_group: 'steam'
-        test_mode: '0600'
-        test_diff: true
+    - name:
+        '{{ "Verify | xml | query " ~ seven_days_to_die___app._config_file }}'
+      community.general.xml:
+        path: '{{ seven_days_to_die___app._config_file }}'
+        content: 'attribute'
+        xpath: '/ServerSettings/property[@name="TelnetEnabled"]'
+      register: seven_days_to_die__test
 
-    # Game always injects templated data into rendered files.
-    - name: 'Verify | serveradmin.xml'
-      ansible.builtin.include_role:
-        name: 'r_pufky.lib.tests'
-        tasks_from: 'copy.yml'
-      vars:
-        test_name: 'Verify | serveradmin.xml'
-        test_src: 'files/serveradmin.xml'
-        test_file: '/home/steam/.local/share/7DaysToDie/Saves/serveradmin.xml'
-        test_owner: 'steam'
-        test_group: 'steam'
-        test_mode: '0600'
-        test_diff: true
+    - name: 'Verify | fact | parse serverconfig.xml'
+      ansible.builtin.set_fact:
+        seven_days_to_die__test_xml:
+          '{{ seven_days_to_die__test.matches[0].property.value }}'
+
+    - name: 'Verify | assert | Preferences.xml TelnetEnabled false'
+      ansible.builtin.assert:
+        quiet: true
+        that:
+          - seven_days_to_die__test_xml == 'false'
+        fail_msg: |
+
+          ✘ TelnetEnabled should be false.

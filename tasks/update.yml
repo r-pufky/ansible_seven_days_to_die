@@ -1,0 +1,29 @@
+---
+###############################################################################
+# Install
+###############################################################################
+# Install location is relative to base installation directory. This is **NOT**
+# customizable, contrary to many mis-documented Internet configurations.
+#
+# Reference:
+# * https://developer.valvesoftware.com/wiki/7_Days_to_Die_Dedicated_Server
+
+- name: 'Update | steamcmd | 🗘 updating server (16GB, ~11 minutes) 🗘'
+  ansible.builtin.debug:
+    msg: |
+
+      🗘 Updating ~16GB (~11 minutes @ 200Mbps). 🗘
+
+- name: '{{ "Update | steamcmd | update " ~ seven_days_to_die__srv._app_id }}'
+  ansible.builtin.shell: '{{
+      seven_days_to_die__cfg._steamcmd ~
+      "+app_update " ~ seven_days_to_die__srv._app_id ~
+      seven_days_to_die__srv._update_opts ~
+      " +quit"
+    }}'
+  args:
+    executable: '/bin/bash'
+    chdir: '{{ steam__ctx._home }}'
+  changed_when: false
+  become: true
+  become_user: '{{ steam__ctx._user }}'

@@ -1,88 +1,83 @@
 # 7 Days to Die
 7 Days to Die dedicated server.
 
-## Requirements
-[supported platforms](https://github.com/r-pufky/ansible_seven_days_to_die/blob/main/meta/main.yml)
+## [Requirements][i]
+Requires [r_pufky.game][g] galaxy-ng collection. See
+[reference documentation][h] for troubleshooting and config variables.
 
-Resource | Minimum | Recommended
----------|---------|------------
-CPU      | 2c/4t   | 4c/8t@3.0Ghz
-RAM      | 6GB     | 12GB
-Disk     | 15GB    | 20GB
+  Resource | Minimum | Recommended
+ ----------|---------|-------------
+  CPU      | 2c/4t   | 4c/8t @3.0Ghz
+  RAM      | 6GB     | 12GB
+  Disk     | 16GB    | 20GB
 
 ## Role Variables
-[defaults](https://github.com/r-pufky/ansible_seven_days_to_die/tree/main/defaults/main)
+Detailed variable use documented in defaults. See usage for role operation.
 
-### Ports
-All ports and protocols have been defined for the role.
+* [defaults][j] - User configurable options.
 
-[defaults/ports.yml](https://github.com/r-pufky/ansible_seven_days_to_die/blob/main/defaults/main/ports.yml)
+* [ports][k] - Ports are **not** managed (defined for external use).
 
-## Dependencies
-**galaxy-ng** roles cannot be used independently. Part of
-[r_pufky.game](https://github.com/r-pufky/ansible_collection_game) collection.
+## Usage
 
-## Example Playbook
-Read defaults documentation.
-[Additional documentation](http://r-pufky.github.io/r-pufky/docs/games/seven_days_to_die).
+### Feature Flags
+Tasks are gated by feature flags and executed in the following order.
 
+  Step | Flag                         | Notes
+ ------|------------------------------|-------
+  1    | seven_days_to_die_flg_update | Update server on launch or if already installed.
+  2    | seven_days_to_die_flg_backup | Enable local scheduled backup.
 
-The following example will get an instance quickly up and running. Server will
-be created using the steamcmd user from `r_pufky.game.steam`.
+### Example Playbooks
+
+#### Default Server
+
 ``` yaml
-- name: '7 Days to Die server'
-  hosts: '7days.example.com'
-  become: true
-  roles:
-     - 'r_pufky.game.seven_days_to_die'
+- name: 'Configure a default 7 Days to Die server with backups.'
+  ansible.builtin.include_role:
+     name: 'r_pufky.game.satisfactory'
   vars:
-    seven_days_to_die_srv_backup_enable: true
-    seven_days_to_die_web_dashboard_enabled: true
-    seven_days_to_die_cfg_server_admin_enable: true
-    seven_days_to_die_cfg_server_admins:
-      - platform: 'Steam'
-        comment: 'Grant steam player root access'
-        id: 76561198021925107
-        level: 0
-    seven_days_to_die_cfg_whitelist:
-      - platform: 'Steam'
-        id: 76561198021925107
-    seven_days_to_die_cfg_api_tokens:
-      - name: 'test'
-        secret: 'test'
-        level: 0
+    satisfactory_flg_backup: true
 ```
 
-Changes updating the configuration only can be done to speed role application:
-``` bash
-ansible-playbook site.yml --tags 7days \
-  -e '{"satisfactory_srv_update_server": false}'
+#### Custom Server
+[Configuration files][o] will be interpreted as templates, allowing for vault
+use of server configuration files. Files in this directory will be sync'ed to
+the server. See [examples in files][n].
+
+``` yaml
+- name: 'Custom server with hot backups.'
+  ansible.builtin.include_role:
+     name: 'r_pufky.game.satisfactory'
+  vars:
+    satisfactory_flg_backup: true
+    seven_days_to_die_cfg_backup_hot: true
+    seven_days_to_die_cfg_server_config:
+      'host_vars/7days.example.com/data/serverconfig.xml'
+    seven_days_to_die_cfg_server_admin:
+      'host_vars/7days.example.com/data/serveradmin.xml'
 ```
 
 ## Development
-Configure [environment](https://r-pufky.github.io/ansible_collection_docs/ansible/environment)
+Configure [environment][a].
 
-Run all unit tests:
 ``` bash
+# Run all tests.
 molecule test --all
 ```
 
-### Releases
-Release format: **{OS}-{SERVICE}-{ROLE}**
+Testing variables:
 
-Each type inherits the versioning system used; defaulting to schematic
-versioning.
+  Variable          | type | Description
+ -------------------|------|-------------
+  url_inject_enable | bool | Disable **get_url** to inject files locally.
 
-`12.0.0-2.0.3-1.0.0`
+### [Releases][b]
 
-* 12.0.0 - Debian 12 (bookworm).
-* 2.0.3 - Service/app version.
-* 1.0.0 - Role version.
-
-Releases are branched on Debian releases:
-
-* **[13.x.x](https://github.com/r-pufky/ansible_seven_days_to_die)**: 13 Trixie.
-* **[12.x.x](https://github.com/r-pufky/ansible_seven_days_to_die/tree/12.x)**: 12 Bookworm.
+  Release | Debian | Ansible | Notes
+ ---------|--------|---------|-------
+  2.x.x   | 13     | 2.20    | Ansible 2.20, feature flags, and semantic versioning.
+  1.x.x   | 12     | 2.11    | Migration from private repository.
 
 ## Issues
 Create a bug and provide as much information as possible.
@@ -90,9 +85,21 @@ Create a bug and provide as much information as possible.
 Associate pull requests with a submitted bug.
 
 ## License
-[AGPL-3.0 License](https://www.tldrlegal.com/license/gnu-affero-general-public-license-v3-agpl-3-0)
- [(direct link)](https://github.com/r-pufky/ansible_seven_days_to_die/blob/main/LICENSE)
+[AGPL-3.0 License][c] | [direct link][f]
 
 ## Author Information
-PGP Fingerprint: [466EEC2B67516C7117C85CE3A0BC35D16698BAB9](https://keys.openpgp.org/vks/v1/by-fingerprint/466EEC2B67516C7117C85CE3A0BC35D16698BAB9)
-| [github gist](https://gist.github.com/r-pufky/a8df36977c55b5bb20829267c4c49d22)
+PGP: [466EEC2B67516C7117C85CE3A0BC35D16698BAB9][d] | [github gist][e]
+
+
+[a]: https://r-pufky.github.io/ansible_docs
+[b]: https://semver.org/spec/v2.0.0
+[c]: https://www.tldrlegal.com/license/gnu-affero-general-public-license-v3-agpl-3-0
+[d]: https://keys.openpgp.org/vks/v1/by-fingerprint/466EEC2B67516C7117C85CE3A0BC35D16698BAB9
+[e]: https://gist.github.com/r-pufky/a8df36977c55b5bb20829267c4c49d22
+
+[f]: https://github.com/r-pufky/ansible_seven_days_to_die/blob/main/LICENSE
+[g]: https://github.com/r-pufky/ansible_collection_game
+[h]: https://r-pufky.github.io/docs/games/seven_days_to_die
+[i]: https://github.com/r-pufky/ansible_seven_days_to_die/blob/main/meta/main.yml
+[j]: https://github.com/r-pufky/ansible_seven_days_to_die/tree/main/defaults/main/main.yml
+[k]: https://github.com/r-pufky/ansible_seven_days_to_die/blob/main/defaults/main/ports.yml
