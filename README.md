@@ -41,9 +41,9 @@ Tasks are gated by feature flags and executed in the following order.
 ```
 
 #### Custom Server
-[Configuration files][o] will be interpreted as templates, allowing for vault
-use of server configuration files. Files in this directory will be sync'ed to
-the server. See [examples in files][n].
+Configuration files will be interpreted as templates, allowing for vault use of
+server configuration files. Files in this directory will be sync'ed to the
+server. See [examples in files][n].
 
 ``` yaml
 - name: 'Custom server with hot backups.'
@@ -103,3 +103,4 @@ PGP: [466EEC2B67516C7117C85CE3A0BC35D16698BAB9][d] | [github gist][e]
 [i]: https://github.com/r-pufky/ansible_seven_days_to_die/blob/main/meta/main.yml
 [j]: https://github.com/r-pufky/ansible_seven_days_to_die/tree/main/defaults/main/main.yml
 [k]: https://github.com/r-pufky/ansible_seven_days_to_die/blob/main/defaults/main/ports.yml
+[n]: https://github.com/r-pufky/ansible_seven_days_to_die/tree/main/files
