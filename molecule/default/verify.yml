@@ -10,9 +10,9 @@
           }}'
 
     - name:
-        '{{ "Verify | xml | query " ~ seven_days_to_die___app._config_file }}'
+        '{{ "Verify | xml | query " ~ seven_days_to_die___app._server_xml }}'
       community.general.xml:
-        path: '{{ seven_days_to_die___app._config_file }}'
+        path: '{{ seven_days_to_die___app._server_xml }}'
         content: 'attribute'
         xpath: '/ServerSettings/property[@name="TelnetEnabled"]'
       register: seven_days_to_die__test

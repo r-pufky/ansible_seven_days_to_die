@@ -9,11 +9,11 @@ Type=oneshot
 {% if not seven_days_to_die__cfg._backup_hot %}
 ExecStartPre=/usr/bin/systemctl stop seven_days_to_die.service
 {% endif %}
-ExecStart=/bin/bash -c '/usr/bin/tar -cvJf "{{ seven_days_to_die__cfg._backup_dir }}/$(date --iso-8601).tar.xz" "{{ seven_days_to_die__cfg._save_dir }}"'
+ExecStart=/bin/bash -c '/usr/bin/tar -cvJf "{{ seven_days_to_die__cfg._backup_d }}/$(date --iso-8601).tar.xz" "{{ seven_days_to_die___app._save_d }}"'
 {% if not seven_days_to_die__cfg._backup_hot %}
 ExecStartPost=/usr/bin/systemctl start seven_days_to_die.service
 {% endif %}
-WorkingDirectory={{ seven_days_to_die__cfg._root_dir }}
+WorkingDirectory={{ seven_days_to_die___app._root_d }}
 User=root
 Group=root
 

@@ -33,15 +33,15 @@ provisioner:
   inventory:
     group_vars:
       all:
-        url_inject_enable: true
+        molecule_flg_inject: true
         seven_days_to_die_flg_backup: true
         seven_days_to_die_cfg_server_config: '{{
             lookup("env", "MOLECULE_PROJECT_DIRECTORY") ~
-            "/files/secured/serverconfig.xml"
+            "/templates/secured/serverconfig.xml"
           }}'
         seven_days_to_die_cfg_server_admin: '{{
             lookup("env", "MOLECULE_PROJECT_DIRECTORY") ~
-            "/files/secured/serveradmin.xml"
+            "/templates/secured/serveradmin.xml"
           }}'
 platforms:
   - name: 'seven-days-to-die-default'
@@ -67,6 +67,7 @@ scenario:
     - 'destroy'
     - 'syntax'
     - 'create'
+    - 'prepare'
     - 'converge'
     - 'verify'
     - 'destroy'

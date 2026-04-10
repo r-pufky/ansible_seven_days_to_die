@@ -13,13 +13,11 @@
 
         _update_opts=seven_days_to_die_srv_update_opts | join(' '),
       ) }}"
-    seven_days_to_die__cfg: "{{ seven_days_to_die___app | r_pufky.data.v3(
+    seven_days_to_die__cfg: "{{ {} | r_pufky.data.v3(
 
         _server_config=seven_days_to_die_cfg_server_config,
         _server_admin=seven_days_to_die_cfg_server_admin,
-        _backup_dir=(
-          seven_days_to_die_cfg_backup_dir | regex_replace('\\/$', '')
-        ),
+        _backup_d=seven_days_to_die_cfg_backup_d | regex_replace('\\/$', ''),
         _backup_hot=seven_days_to_die_cfg_backup_hot,
         _backup_schedule=seven_days_to_die_cfg_backup_schedule,
       ) }}"

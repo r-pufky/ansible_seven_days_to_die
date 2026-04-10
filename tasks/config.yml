@@ -12,47 +12,28 @@
 # Reference:
 # * https://developer.valvesoftware.com/wiki/7_Days_to_Die_Dedicated_Server
 
-- name: '{{
-      "Update | filesystem | set " ~ seven_days_to_die__cfg._config_file
-    }}'
-  when: seven_days_to_die__cfg._server_config | length > 0
+- name:
+    '{{ "Update | filesystem | set " ~ seven_days_to_die___app._server_xml }}'
   ansible.builtin.template:
-    src: '{{ seven_days_to_die__cfg._server_config }}'
-    dest: '{{ seven_days_to_die__cfg._config_file }}'
+    src: '{{
+        seven_days_to_die__cfg._server_config
+        if seven_days_to_die__cfg._server_config | length > 0 else
+        "templates/default/serverconfig.xml"
+      }}'
+    dest: '{{ seven_days_to_die___app._server_xml }}'
     owner: '{{ steam__ctx._user }}'
     group: '{{ steam__ctx._group }}'
     mode: '0664'  # Game enforced.
 
-- name: '{{
-      "Update | filesystem | set minimal " ~
-      seven_days_to_die__cfg._config_file
-    }}'
-  when: seven_days_to_die__cfg._server_config | length == 0
-  ansible.builtin.copy:
-    src: 'files/default/serverconfig.xml'
-    dest: '{{ seven_days_to_die__cfg._config_file }}'
-    owner: '{{ steam__ctx._user }}'
-    group: '{{ steam__ctx._group }}'
-    mode: '0664'  # Game enforced.
-
-- name: '{{
-      "Update | filesystem | set " ~ seven_days_to_die__cfg._admin_file
-    }}'
-  when: seven_days_to_die__cfg._server_admin | length > 0
+- name:
+    '{{ "Update | filesystem | set " ~ seven_days_to_die___app._admin_xml }}'
   ansible.builtin.template:
-    src: '{{ seven_days_to_die__cfg._server_admin }}'
-    dest: '{{ seven_days_to_die__cfg._admin_file }}'
+    src: '{{
+        seven_days_to_die__cfg._server_admin
+        if seven_days_to_die__cfg._server_admin | length > 0 else
+        "templates/default/serverconfig.xml"
+      }}'
+    dest: '{{ seven_days_to_die___app._admin_xml }}'
     owner: '{{ steam__ctx._user }}'
     group: '{{ steam__ctx._group }}'
-    mode: '0600'  # Game enforced.
-
-- name: '{{
-      "Update | filesystem | set minimal " ~ seven_days_to_die__cfg._admin_file
-    }}'
-  when: seven_days_to_die__cfg._server_admin | length == 0
-  ansible.builtin.copy:
-    src: 'files/default/serverconfig.xml'
-    dest: '{{ seven_days_to_die__cfg._admin_file }}'
-    owner: '{{ steam__ctx._user }}'
-    group: '{{ steam__ctx._group }}'
-    mode: '0664'  # Game enforced.
+    mode: '0600'  # Game enforced.  TODO - check 0664.

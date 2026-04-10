@@ -14,10 +14,11 @@
 
       🗘 Updating ~16GB (~11 minutes @ 200Mbps). 🗘
 
-- name: '{{ "Update | steamcmd | update " ~ seven_days_to_die__srv._app_id }}'
+- name:
+    '{{ "Update | steamcmd | update " ~ seven_days_to_die___release._app_id }}'
   ansible.builtin.shell: '{{
-      seven_days_to_die__cfg._steamcmd ~
-      "+app_update " ~ seven_days_to_die__srv._app_id ~
+      seven_days_to_die___app._steamcmd ~
+      "+app_update " ~ seven_days_to_die___release._app_id ~
       seven_days_to_die__srv._update_opts ~
       " +quit"
     }}'

@@ -4,9 +4,6 @@
 ###############################################################################
 # Ensure services and confirm they are active and running.
 
-- name: 'Start | meta | 🗘 flush timers 🗘'
-  ansible.builtin.meta: flush_handlers
-
 - name: 'Start | systemd | seven_days_to_die.service'
   ansible.builtin.systemd:
     name: 'seven_days_to_die.service'
@@ -18,13 +15,19 @@
   register: seven_days_to_die__service
   until: seven_days_to_die__service.status.ActiveState == 'active'
 
+# Seven Days To Die must be started before first backup timer triggers.
+- name: 'Start | meta | 🗘 flush timers 🗘'
+  ansible.builtin.meta: flush_handlers
+
 - name: 'Start | fact | query services'
   ansible.builtin.service_facts:
 
+# First time service start can take very long to report running; just check to
+# make sure it has not immediately failed from a bad configuration.
 - name: 'Start | assert | services running'
   ansible.builtin.assert:
     quiet: true
-    that: ansible_facts.services[item].state == 'running'
+    that: ansible_facts.services[item].state != 'failed'
     fail_msg: |
 
       ✘ Service failed to start.

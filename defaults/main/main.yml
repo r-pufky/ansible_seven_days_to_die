@@ -36,11 +36,11 @@ seven_days_to_die_srv_update_opts: []
 # /home/steam/seven_days_to_die/serverconfig.xml.
 #
 # A default config that works with the role will be deployed if no config file
-# is specified (see files/default/serverconfig.xml):
+# is specified (see templates/default/serverconfig.xml):
 #
 # Role contains two example configurations:
-# * files/default - Vanilla auto-generated server settings.
-# * files/secured - Vanilla with telnet disabled (recommended).
+# * templates/default - Vanilla auto-generated server settings.
+# * templates/secured - Vanilla with telnet disabled (recommended).
 #
 # seven_days_to_die_cfg_server_config:
 #   'host_vars/sat.example.com/data/serverconfig.xml'
@@ -59,11 +59,11 @@ seven_days_to_die_cfg_server_config: ''
 # /home/steam/seven_days_to_die/serveradmin.xml.
 #
 # A default config that works with the role will be deployed if no config file
-# is specified (see files/default/serveradmin.xml):
+# is specified (see templates/default/serveradmin.xml):
 #
 # Role contains two example configurations:
-# * files/default - Vanilla auto-generated server settings.
-# * files/secured - Vanilla with telnet disabled (recommended).
+# * templates/default - Vanilla auto-generated server settings.
+# * templates/secured - Vanilla with telnet disabled (recommended).
 #
 # seven_days_to_die_cfg_server_admin:
 #   'host_vars/sat.example.com/data/serveradmin.xml'
@@ -79,7 +79,7 @@ seven_days_to_die_cfg_server_admin: ''
 ###############################################################################
 
 # Root backup location. Default: '/srv/backup/seven_days_to_die'.
-seven_days_to_die_cfg_backup_dir: '/srv/backup/seven_days_to_die'
+seven_days_to_die_cfg_backup_d: '/srv/backup/seven_days_to_die'
 
 # Enable hot backups?
 #

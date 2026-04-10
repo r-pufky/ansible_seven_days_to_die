@@ -25,11 +25,11 @@ seven_days_to_die___release: "{{ {} | r_pufky.data.v3(
 
 seven_days_to_die___app: "{{ {} | r_pufky.data.v3(
 
-    _app='/home/steam/seven_days_to_die/startserver.sh',
-    _root_dir='/home/steam/seven_days_to_die',
-    _config_file='/home/steam/seven_days_to_die/serverconfig.xml',
-    _admin_file='/home/steam/seven_days_to_die/serveradmin.xml',
-    _save_dir='/home/steam/.local/share/7DaysToDie/Saves',
+    _bin='/home/steam/seven_days_to_die/startserver.sh',
+    _root_d='/home/steam/seven_days_to_die',
+    _server_xml='/home/steam/seven_days_to_die/serverconfig.xml',
+    _admin_xml='/home/steam/seven_days_to_die/serveradmin.xml',
+    _save_d='/home/steam/.local/share/7DaysToDie/Saves',
     _steamcmd=(
       '/usr/games/steamcmd ' ~
       '+@sSteamCmdForcePlatformType ' ~ seven_days_to_die___release._platform ~
