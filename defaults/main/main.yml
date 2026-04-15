@@ -32,7 +32,7 @@ seven_days_to_die_srv_update_opts: []
 # serverconfig.xml to set.
 #
 # Ansible controller path to source serverconfig.xml (treated as a jinja2
-# template allowing for ansible variable interpretation). Overwrites existing
+# template allowing for ansible variable use). Overwrites existing
 # /home/steam/seven_days_to_die/serverconfig.xml.
 #
 # A default config that works with the role will be deployed if no config file
@@ -48,14 +48,14 @@ seven_days_to_die_srv_update_opts: []
 # Default: '' (use auto-generated defaults on startup).
 #
 # Reference:
-# * https://r-pufky.github.io/docs/games/seven_days_to_die
+# * https://r-pufky.github.io/docs/game/seven_days_to_die
 # * https://developer.valvesoftware.com/wiki/7_Days_to_Die_Dedicated_Server
 seven_days_to_die_cfg_server_config: ''
 
 # serveradmin.xml to set.
 #
 # Ansible controller path to source serveradmin.xml (treated as a jinja2
-# template allowing for ansible variable interpretation). Overwrites existing
+# template allowing for ansible variable use). Overwrites existing
 # /home/steam/seven_days_to_die/serveradmin.xml.
 #
 # A default config that works with the role will be deployed if no config file
@@ -71,7 +71,7 @@ seven_days_to_die_cfg_server_config: ''
 # Default: '' (use auto-generated defaults on startup).
 #
 # Reference:
-# * https://r-pufky.github.io/docs/games/seven_days_to_die
+# * https://r-pufky.github.io/docs/game/seven_days_to_die
 # * https://developer.valvesoftware.com/wiki/7_Days_to_Die_Dedicated_Server
 seven_days_to_die_cfg_server_admin: ''
 
