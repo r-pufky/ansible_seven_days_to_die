@@ -11,6 +11,10 @@ Requires [r_pufky.game][g] galaxy-ng collection. See
   RAM      | 6GB     | 12GB
   Disk     | 16GB    | 20GB
 
+> VM's are highly recommended to provide strong isolation. Many servers require
+> low-level access to networking and hardware. Containers may be enabled but
+> are not supported for issues.
+
 ## Role Variables
 Detailed variable use documented in defaults. See usage for role operation.
 
@@ -23,10 +27,12 @@ Detailed variable use documented in defaults. See usage for role operation.
 ### Feature Flags
 Tasks are gated by feature flags and executed in the following order.
 
-  Step | Flag                         | Notes
- ------|------------------------------|-------
-  1    | seven_days_to_die_flg_update | Update server on launch or if already installed.
-  2    | seven_days_to_die_flg_backup | Enable local scheduled backup.
+  Step | Flag                            | Notes
+ ------|---------------------------------|-------
+  1    | seven_days_to_die_flg_container | Deploy container specific settings.
+  2    | seven_days_to_die_flg_cdn       | Statically set Steam CDN IP.
+  3    | seven_days_to_die_flg_update    | Update server on launch or if already installed.
+  4    | seven_days_to_die_flg_backup    | Enable local scheduled backup.
 
 ### Example Playbooks
 

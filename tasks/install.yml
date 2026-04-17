@@ -10,6 +10,8 @@
     name: 'r_pufky.game.steam'
   vars:
     steam_flg_update: false
+    steam_flg_container: '{{ seven_days_to_die_flg_container }}'
+    steam_flg_cdn: '{{ seven_days_to_die_flg_cdn }}'
 
 - name: 'Install | filesystem | find current installation'
   ansible.builtin.stat:
