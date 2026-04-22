@@ -61,6 +61,15 @@
       become: true
       become_user: '{{ steam__ctx._user }}'
 
+- name:
+    '{{ "Install | filesystem | " ~ seven_days_to_die___app._update_server }}'
+  ansible.builtin.template:
+    src: 'update_server.j2'
+    dest: '{{ seven_days_to_die___app._update_server }}'
+    owner: '{{ steam__ctx._user }}'
+    group: '{{ steam__ctx._group }}'
+    mode: '0755'
+
 - name: 'Install | systemd | set seven_days_to_die.service'
   ansible.builtin.template:
     src: 'systemd/seven_days_to_die.service.j2'

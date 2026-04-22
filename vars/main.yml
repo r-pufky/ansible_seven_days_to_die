@@ -30,6 +30,7 @@ seven_days_to_die___app: "{{ {} | r_pufky.data.v3(
     _server_xml='/home/steam/seven_days_to_die/serverconfig.xml',
     _admin_xml='/home/steam/seven_days_to_die/serveradmin.xml',
     _save_d='/home/steam/.local/share/7DaysToDie/Saves',
+    _update_server='/home/steam/seven_days_to_die/update_server',
     _steamcmd=(
       '/usr/games/steamcmd ' ~
       '+@sSteamCmdForcePlatformType ' ~ seven_days_to_die___release._platform ~
